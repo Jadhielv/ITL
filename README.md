@@ -25,6 +25,10 @@ Data validation using [FluentValidation](https://github.com/JeremySkinner/Fluent
 
 Follow the instructions in [README](https://github.com/Jadhielv/KCTest/blob/master/kctest-frontend/README.md) file.
 
+## Give a Star!
+
+If you like this project, learn something or you are using it in your applications, please give it a star. Thanks! .. .
+
 ## License
 
 This project is open source and available under the: [MIT License](LICENSE)
