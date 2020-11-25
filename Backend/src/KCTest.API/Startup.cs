@@ -40,8 +40,7 @@ namespace KCTest.API
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new MappingProfileToDTOs());
-                cfg.AddProfile(new MappingProfileToEntities());
+                cfg.AddProfile(new MappingProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
