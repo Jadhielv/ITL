@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using KCTest.Domain;
 using KCTest.Domain.Common;
 using KCTest.Domain.DTOs;
@@ -16,33 +15,26 @@ namespace KCTest.Application.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IValidator<PermissionTypeDto> _permissionTypeValidator;
 
-        public PermissionTypeService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<PermissionTypeDto> permissionTypeValidator)
+        public PermissionTypeService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _permissionTypeValidator = permissionTypeValidator;
         }
         public async Task<Result<HttpResponse>> AddPermissionType(PermissionTypeDto permissionTypeDto)
         {
             try
             {
-                var validationResult = await _permissionTypeValidator.ValidateAsync(permissionTypeDto);
-                if (validationResult.IsValid)
-                {
-                    var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
-                    if (exists)
-                        return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type already exist."));
+                var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
+                if (exists)
+                    return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type already exist."));
 
-                    var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
+                var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
 
-                    await _unitOfWork.PermissionTypeRepository.AddAsync(permissionType);
-                    await _unitOfWork.SaveAsync();
+                await _unitOfWork.PermissionTypeRepository.AddAsync(permissionType);
+                await _unitOfWork.SaveAsync();
 
-                    return HttpResponseHelper.NewResult(HttpStatusCode.Created, HttpResponseHelper.NewHttpResponse("New permission type added", success: true));
-                }
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse(error: validationResult.Errors.ValidationsErrors()));
+                return HttpResponseHelper.NewResult(HttpStatusCode.Created, HttpResponseHelper.NewHttpResponse("New permission type added", success: true));
             }
             catch (Exception e)
             {
@@ -54,21 +46,15 @@ namespace KCTest.Application.Services
         {
             try
             {
-                var validationResult = await _permissionTypeValidator.ValidateAsync(permissionTypeDto);
-                if (validationResult.IsValid)
-                {
-                    var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
-                    if (!exists)
-                        return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type doesn't exist."));
+                var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
+                if (!exists)
+                    return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type doesn't exist."));
 
-                    var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
-                    await _unitOfWork.PermissionTypeRepository.UpdateAsync(permissionType);
-                    await _unitOfWork.SaveAsync();
+                var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
+                await _unitOfWork.PermissionTypeRepository.UpdateAsync(permissionType);
+                await _unitOfWork.SaveAsync();
 
-                    return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse("The permission type was updated it", success: true));
-                }
-
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse(error: validationResult.Errors.ValidationsErrors()));
+                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse("The permission type was updated it", success: true));
             }
             catch (Exception e)
             {
