@@ -5,7 +5,6 @@ using KCTest.Domain;
 using KCTest.Domain.Services;
 using KCTest.Infrastructure;
 using KCTest.Infrastructure.Database;
-using KCTest.Infrastructure.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
