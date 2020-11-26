@@ -1,14 +1,11 @@
 using AutoMapper;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using KCTest.Application.Services;
 using KCTest.Domain;
-using KCTest.Domain.DTOs;
 using KCTest.Domain.Services;
 using KCTest.Infrastructure;
 using KCTest.Infrastructure.Database;
 using KCTest.Infrastructure.Mapper;
-using KCTest.Infrastructure.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Linq;
+using System.Reflection;
 
 namespace KCTest.API
 {
@@ -32,7 +31,8 @@ namespace KCTest.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddFluentValidation();
+            services.AddControllers().AddFluentValidation(config =>
+                config.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load)));
 
             services.AddDbContext<KCTestContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
@@ -49,9 +49,6 @@ namespace KCTest.API
 
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPermissionTypeService, PermissionTypeService>();
-
-            services.AddSingleton<IValidator<PermissionDto>, PermissionValidator>();
-            services.AddSingleton<IValidator<PermissionTypeDto>, PermissionTypeValidator>();
 
             var client = Configuration.GetSection("ClientHost").Value;
 
