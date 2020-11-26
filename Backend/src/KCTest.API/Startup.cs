@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using KCTest.Application.Services;
 using KCTest.Domain;
 using KCTest.Domain.DTOs;
@@ -31,7 +32,7 @@ namespace KCTest.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation();
 
             services.AddDbContext<KCTestContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
