@@ -8,6 +8,6 @@ namespace KCTest.Domain.DTOs
         public string Name { get; set; }
         public string LastName { get; set; }
         public PermissionTypeDto PermissionType { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
     }
 }
