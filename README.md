@@ -9,6 +9,7 @@ The solution design focuses on a basic Domain Driven Design techniques and imple
 -   **KCTest.Application**  - This assembly contains all services implementations.
 -   **KCTest.Infrastructure**  - This assembly contains the infrastructure of data persistence.
 -   **KCTest.API**  - This assembly is the web api host.
+-   **KCTest.Tests**  - This assembly contains unit test classes based on the [NUnit](https://github.com/nunit/nunit) testing framework.
 
 ## Validation
 Data validation using [FluentValidation](https://github.com/JeremySkinner/FluentValidation)
