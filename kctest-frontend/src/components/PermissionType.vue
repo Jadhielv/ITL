@@ -14,7 +14,7 @@
           </b-modal>
       </div>
       <div class="col-12">
-          <table class="table table-striped table-bordered">
+          <table class="table table-striped table-bordered" style="width: 40% !important">
             <thead>
               <tr>
                 <th v-for='column of columns' v-bind:key='column.id' scope="col">{{ column }}</th>
