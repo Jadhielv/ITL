@@ -26,10 +26,6 @@ namespace KCTest.Application.Services
         {
             try
             {
-                var exists = await _unitOfWork.PermissionRepository.ExistAsync(x => x.Id == permissionDto.Id);
-                if (exists)
-                    return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission already exist."));
-
                 var permission = _mapper.Map<Permission>(permissionDto);
                 var permissionType = _unitOfWork.PermissionTypeRepository.GetByIdAsync(permission.PermissionType.Id).Result;
 
