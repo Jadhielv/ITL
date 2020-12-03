@@ -21,98 +21,98 @@ namespace KCTest.Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<Result<HttpResponse>> AddPermissionType(PermissionTypeDto permissionTypeDto)
+        public async Task<Result<ResponseWithElement<PermissionTypeDto>>> AddPermissionType(PermissionTypeDto permissionTypeDto)
         {
             try
             {
                 var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
                 if (exists)
-                    return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type already exist."));
+                    return ResponseHelper.NewResult(HttpStatusCode.Conflict, ResponseHelper.NewResponseWithElement<PermissionTypeDto>(error: "The permission type already exist."));
 
                 var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
 
                 await _unitOfWork.PermissionTypeRepository.AddAsync(permissionType);
                 await _unitOfWork.SaveAsync();
 
-                return HttpResponseHelper.NewResult(HttpStatusCode.Created, HttpResponseHelper.NewHttpResponse("New permission type added", success: true));
+                return ResponseHelper.NewResult(HttpStatusCode.Created, ResponseHelper.NewResponseWithElement(message: "New permission type added", element: _mapper.Map<PermissionTypeDto>(permissionType), success: true));
             }
             catch (Exception e)
             {
-                return HttpResponseHelper.NewResult(HttpStatusCode.InternalServerError, HttpResponseHelper.NewHttpResponse(error: e.Message));
+                return ResponseHelper.NewResult(HttpStatusCode.InternalServerError, ResponseHelper.NewResponseWithElement<PermissionTypeDto>(error: e.Message));
             }
         }
 
-        public async Task<Result<HttpResponse>> UpdatePermissionType(PermissionTypeDto permissionTypeDto)
+        public async Task<Result<Response>> UpdatePermissionType(PermissionTypeDto permissionTypeDto)
         {
             try
             {
                 var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
                 if (!exists)
-                    return HttpResponseHelper.NewResult(HttpStatusCode.Conflict, HttpResponseHelper.NewHttpResponse(error: "The permission type doesn't exist."));
+                    return ResponseHelper.NewResult(HttpStatusCode.Conflict, ResponseHelper.NewResponse(error: "The permission type doesn't exist."));
 
                 var permissionType = _mapper.Map<PermissionType>(permissionTypeDto);
                 await _unitOfWork.PermissionTypeRepository.UpdateAsync(permissionType);
                 await _unitOfWork.SaveAsync();
 
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse("The permission type was updated it", success: true));
+                return ResponseHelper.NewResult(HttpStatusCode.OK, ResponseHelper.NewResponse("The permission type was updated it", success: true));
             }
             catch (Exception e)
             {
-                return HttpResponseHelper.NewResult(HttpStatusCode.InternalServerError, HttpResponseHelper.NewHttpResponse(error: e.Message));
+                return ResponseHelper.NewResult(HttpStatusCode.InternalServerError, ResponseHelper.NewResponse(error: e.Message));
             }
         }
 
-        public async Task<Result<HttpResponse>> DeletePermissionType(int permissionTypeId)
+        public async Task<Result<Response>> DeletePermissionType(int permissionTypeId)
         {
             try
             {
                 var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeId);
                 if (!exists)
-                    return HttpResponseHelper.NewResult(HttpStatusCode.BadRequest, HttpResponseHelper.NewHttpResponse(error: "The permission type doesn't exist."));
+                    return ResponseHelper.NewResult(HttpStatusCode.BadRequest, ResponseHelper.NewResponse(error: "The permission type doesn't exist."));
 
                 var permissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permissionTypeId);
                 await _unitOfWork.PermissionTypeRepository.DeleteAsync(permissionType);
                 await _unitOfWork.SaveAsync();
 
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponse(message: "The permission type was deleted it.", success: true));
+                return ResponseHelper.NewResult(HttpStatusCode.OK, ResponseHelper.NewResponse(message: "The permission type was deleted it.", success: true));
             }
             catch (Exception e)
             {
-                return HttpResponseHelper.NewResult(HttpStatusCode.InternalServerError, HttpResponseHelper.NewHttpResponse(error: e.Message));
+                return ResponseHelper.NewResult(HttpStatusCode.InternalServerError, ResponseHelper.NewResponse(error: e.Message));
             }
         }
 
-        public async Task<Result<HttpResponseWithElement<PermissionTypeDto>>> GetPermissionType(int permissionTypeId)
+        public async Task<Result<ResponseWithElement<PermissionTypeDto>>> GetPermissionType(int permissionTypeId)
         {
             try
             {
                 var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeId);
                 if (!exists)
-                    return HttpResponseHelper.NewResult(HttpStatusCode.BadRequest, HttpResponseHelper.NewHttpResponseWithElement<PermissionTypeDto>(error: "The permission type doesn't exist."));
+                    return ResponseHelper.NewResult(HttpStatusCode.BadRequest, ResponseHelper.NewResponseWithElement<PermissionTypeDto>(error: "The permission type doesn't exist."));
 
                 var permissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permissionTypeId);
                 var permissionTypeDto = _mapper.Map<PermissionTypeDto>(permissionType);
 
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponseWithElement(element: permissionTypeDto, success: true));
+                return ResponseHelper.NewResult(HttpStatusCode.OK, ResponseHelper.NewResponseWithElement(element: permissionTypeDto, success: true));
             }
             catch (Exception e)
             {
-                return HttpResponseHelper.NewResult(HttpStatusCode.InternalServerError, HttpResponseHelper.NewHttpResponseWithElement<PermissionTypeDto>(error: e.Message));
+                return ResponseHelper.NewResult(HttpStatusCode.InternalServerError, ResponseHelper.NewResponseWithElement<PermissionTypeDto>(error: e.Message));
             }
         }
 
-        public async Task<Result<HttpResponseWithList<PermissionTypeDto>>> GetPermissionTypes(Pagination pagination = null)
+        public async Task<Result<ResponseWithList<PermissionTypeDto>>> GetPermissionTypes(Pagination pagination = null)
         {
             try
             {
                 var permissionsType = await _unitOfWork.PermissionTypeRepository.GetAllAsync();
                 var permissionsTypeDto = _mapper.Map<IEnumerable<PermissionTypeDto>>(permissionsType);
 
-                return HttpResponseHelper.NewResult(HttpStatusCode.OK, HttpResponseHelper.NewHttpResponseList(elements: permissionsTypeDto, success: true));
+                return ResponseHelper.NewResult(HttpStatusCode.OK, ResponseHelper.NewResponseList(elements: permissionsTypeDto, success: true));
             }
             catch (Exception e)
             {
-                return HttpResponseHelper.NewResult(HttpStatusCode.InternalServerError, HttpResponseHelper.NewHttpResponseList<PermissionTypeDto>(error: e.Message));
+                return ResponseHelper.NewResult(HttpStatusCode.InternalServerError, ResponseHelper.NewResponseList<PermissionTypeDto>(error: e.Message));
             }
         }
     }

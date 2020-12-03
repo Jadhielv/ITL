@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace KCTest.Infrastructure.Helpers
 {
-    public class HttpResponseHelper
+    public class ResponseHelper
     {
-        public static HttpResponse NewHttpResponse(string message = "", string error = "", bool success = false)
+        public static Response NewResponse(string message = "", string error = "", bool success = false)
         {
-            return new HttpResponse
+            return new Response
             {
                 Error = error,
                 Success = success,
@@ -15,9 +15,9 @@ namespace KCTest.Infrastructure.Helpers
             };
         }
 
-        public static HttpResponseWithElement<T> NewHttpResponseWithElement<T>(T element = default(T), string message = "", string error = "", bool success = false)
+        public static ResponseWithElement<T> NewResponseWithElement<T>(T element = default(T), string message = "", string error = "", bool success = false)
         {
-            return new HttpResponseWithElement<T>
+            return new ResponseWithElement<T>
             {
                 Error = error,
                 Success = success,
@@ -26,9 +26,9 @@ namespace KCTest.Infrastructure.Helpers
             };
         }
 
-        public static HttpResponseWithList<T> NewHttpResponseList<T>(IEnumerable<T> elements = default(IEnumerable<T>), string message = "", string error = "", bool success = false)
+        public static ResponseWithList<T> NewResponseList<T>(IEnumerable<T> elements = default(IEnumerable<T>), string message = "", string error = "", bool success = false)
         {
-            return new HttpResponseWithList<T>
+            return new ResponseWithList<T>
             {
                 Error = error,
                 List = elements,
