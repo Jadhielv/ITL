@@ -5,11 +5,21 @@
           <b-button class="mb-2 btn btn-secondary" v-b-modal="'permissionTypeForm'">Add new permission type</b-button>
           <b-modal id="permissionTypeForm" hide-footer v-if='showModal' @hidden="cleanModal()">
              <b-form>
+               <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                  <li v-for='error in errors' v-bind:key='error.id'>{{ error }}</li>
+                </ul>
+              </p>
                 <b-form-group class="font-weight-bold" id="input-group-1" label="Description:" label-for="input-1" description="Description">
-                  <b-form-input id="input-1" v-model="permissionType.description" type="text" v-on:keypress='isLetter($event)' required placeholder="Enter description"></b-form-input>
+                  <b-form-input id="input-1"
+                    v-model="permissionType.description"
+                    type="text"
+                    v-on:keypress='isLetter($event)'
+                    required placeholder="Enter description"></b-form-input>
                 </b-form-group>
 
-                <b-button class="float-right btn btn-secondary" v-on:click='addOrEditPermissionType()' variant="secondary">Save</b-button>
+                <b-button class="float-right btn btn-secondary" v-on:click='addOrEditPermissionType($event)' variant="secondary">Save</b-button>
               </b-form>
           </b-modal>
       </div>
@@ -55,25 +65,27 @@ export default {
     getElementValue: function (element) {
       return element?.description || element
     },
-    addOrEditPermissionType: async function () {
-      if (!this.isEditing) {
-        const result = await httpService.post('permissionType', this.permissionType)
-        this.permissionTypes = [...this.permissionTypes, this.permissionType]
-        if (result.success) {
-          this.$bvModal.hide('permissionTypeForm')
-          this.cleanModal()
-          this.updatePermissionTypes()
+    addOrEditPermissionType: async function (e) {
+      if (this.checkForm(e)) {
+        if (!this.isEditing) {
+          const result = await httpService.post('permissionType', this.permissionType)
+          this.permissionTypes = [...this.permissionTypes, this.permissionType]
+          if (result.success) {
+            this.$bvModal.hide('permissionTypeForm')
+            this.cleanModal()
+            this.updatePermissionTypes()
+          } else {
+            this.permissionTypes = this.permissionTypes.pop()
+          }
         } else {
-          this.permissionTypes = this.permissionTypes.pop()
+          const result = await httpService.put('permissionType', this.permissionType)
+          if (result.success) {
+            const index = this.permissionTypes.indexOf(this.permissionType)
+            this.permissionTypes[index] = this.permissionType
+            this.$bvModal.hide('permissionTypeForm')
+            this.cleanModal()
+          } else { }
         }
-      } else {
-        const result = await httpService.put('permissionType', this.permissionType)
-        if (result.success) {
-          const index = this.permissionTypes.indexOf(this.permissionType)
-          this.permissionTypes[index] = this.permissionType
-          this.$bvModal.hide('permissionTypeForm')
-          this.cleanModal()
-        } else { }
       }
     },
     editPermissionType: function (permissionType) {
@@ -91,6 +103,7 @@ export default {
     cleanModal: function () {
       this.permissionType = { id: undefined, description: '' }
       this.isEditing = false
+      this.errors = []
     },
     countDownChanged: function (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -113,6 +126,19 @@ export default {
       let char = String.fromCharCode(e.keyCode)
       if (/^[A-Za-z\s]+$/.test(char)) return true
       else e.preventDefault()
+    },
+    checkForm: function (e) {
+      this.errors = []
+
+      if (!this.permissionType.description) {
+        this.errors.push('Description required.')
+      }
+
+      if (!this.errors.length) {
+        return true
+      }
+
+      e.preventDefault()
     }
   },
   data: function () {
@@ -120,6 +146,7 @@ export default {
       showModal: true,
       columns: ['Description'],
       permissionTypes: [],
+      errors: [],
       permissionType: { id: undefined, description: '' },
       isEditing: false,
       dismissSecs: 5,
