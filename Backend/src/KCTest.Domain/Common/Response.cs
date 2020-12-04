@@ -8,20 +8,20 @@ namespace KCTest.Domain.Common
         public int StatusCode { get; set; }
     }
 
-    public class HttpResponse
+    public class Response
     {
         public bool Success { get; set; }
         public string Message { get; set; }
         public string Error { get; set; }
     }
 
-    public class HttpResponseWithList<T> : HttpResponse
+    public class ResponseWithList<T> : Response
     {
         public IEnumerable<T> List { get; set; }
         public int Total { get; set; }
     }
 
-    public class HttpResponseWithElement<T> : HttpResponse
+    public class ResponseWithElement<T> : Response
     {
         public T Element { get; set; }
     }
