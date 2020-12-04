@@ -6,7 +6,7 @@ namespace KCTest.Domain.Services
 {
     public interface IPermissionTypeService
     {
-        Task<Result<ResponseWithElement<PermissionDto>>> AddPermissionType(PermissionTypeDto permissionDto);
+        Task<Result<ResponseWithElement<PermissionTypeDto>>> AddPermissionType(PermissionTypeDto permissionDto);
         Task<Result<Response>> UpdatePermissionType(PermissionTypeDto permissionDto);
         Task<Result<Response>> DeletePermissionType(int permissionId);
         Task<Result<ResponseWithElement<PermissionTypeDto>>> GetPermissionType(int permissionId);
