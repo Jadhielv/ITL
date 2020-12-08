@@ -11,6 +11,10 @@ The solution design focuses on a basic Domain Driven Design techniques and imple
 -   **KCTest.API**  - This assembly is the web api host.
 -   **KCTest.Tests**  - This assembly contains unit test classes based on the [NUnit](https://github.com/nunit/nunit) testing framework.
 
+## How to contribute
+
+> :thought_balloon: If you are new in Open Source world feel free to check our [How to contribute guidelines](https://github.com/Jadhielv/KCTest/blob/master/CONTRIBUTING.md)
+
 ## Validation
 Data validation using [FluentValidation](https://github.com/JeremySkinner/FluentValidation)
 
