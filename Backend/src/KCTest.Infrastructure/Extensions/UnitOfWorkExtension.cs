@@ -7,7 +7,7 @@ using KCTest.Domain;
 
 namespace KCTest.Infrastructure.Repositories
 {
-    public static class RepositoriesExtension
+    public static class UnitOfWorkExtension
     {
         public static IServiceCollection SetupUnitOfWork([NotNullAttribute] this IServiceCollection serviceCollection)
         {
