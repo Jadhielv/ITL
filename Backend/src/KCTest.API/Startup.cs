@@ -35,14 +35,12 @@ namespace KCTest.API
                 config.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load)));
 
             services.AddDbContext<KCTestContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")),
-                ServiceLifetime.Transient);
+                options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
 
-            services.SetUpUnitOfWork();
+            services.SetupUnitOfWork();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
-            //SERVICES:
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPermissionTypeService, PermissionTypeService>();
 

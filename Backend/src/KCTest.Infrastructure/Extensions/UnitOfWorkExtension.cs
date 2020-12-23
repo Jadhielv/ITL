@@ -9,7 +9,7 @@ namespace KCTest.Infrastructure.Repositories
 {
     public static class RepositoriesExtension
     {
-        public static IServiceCollection SetUpUnitOfWork([NotNullAttribute] this IServiceCollection serviceCollection)
+        public static IServiceCollection SetupUnitOfWork([NotNullAttribute] this IServiceCollection serviceCollection)
         {
             //TODO: Find a way to inject the repositories and share the same context without creating a instance.
             serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(f =>
