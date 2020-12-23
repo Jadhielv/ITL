@@ -5,6 +5,7 @@ using KCTest.Domain;
 using KCTest.Domain.Services;
 using KCTest.Infrastructure;
 using KCTest.Infrastructure.Database;
+using KCTest.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -34,12 +35,14 @@ namespace KCTest.API
                 config.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load)));
 
             services.AddDbContext<KCTestContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
+                options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")),
+                ServiceLifetime.Transient);
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.SetUpUnitOfWork();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
+            //SERVICES:
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPermissionTypeService, PermissionTypeService>();
 
