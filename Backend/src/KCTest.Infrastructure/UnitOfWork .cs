@@ -13,12 +13,12 @@ namespace KCTest.Infrastructure
 
         private readonly KCTestContext _kCTestContext;
 
-        public UnitOfWork(KCTestContext kCTestContext)
+        public UnitOfWork(KCTestContext kCTestContext, IPermissionRepository permissionRepository, IPermissionTypeRepository permissionTypeRepository)
         {
             _kCTestContext = kCTestContext;
 
-            PermissionRepository = new PermissionRepository(_kCTestContext.Permissions);
-            PermissionTypeRepository = new PermissionTypeRepository(_kCTestContext.PermissionTypes);
+            PermissionRepository = permissionRepository;
+            PermissionTypeRepository = permissionTypeRepository;
         }
 
         public async Task<int> SaveAsync() => await _kCTestContext.SaveChangesAsync();
