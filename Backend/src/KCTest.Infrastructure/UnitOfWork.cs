@@ -1,7 +1,6 @@
 ﻿using KCTest.Domain;
 using KCTest.Domain.Repositories;
 using KCTest.Infrastructure.Database;
-using KCTest.Infrastructure.Repositories;
 using System.Threading.Tasks;
 
 namespace KCTest.Infrastructure

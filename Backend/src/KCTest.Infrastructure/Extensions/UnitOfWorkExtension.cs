@@ -1,9 +1,7 @@
-using KCTest.Infrastructure.Database;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
-using KCTest.Domain.Repositories;
 using KCTest.Domain;
+using KCTest.Infrastructure.Database;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace KCTest.Infrastructure.Repositories
 {

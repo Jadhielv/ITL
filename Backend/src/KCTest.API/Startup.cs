@@ -1,9 +1,7 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using KCTest.Application.Services;
-using KCTest.Domain;
 using KCTest.Domain.Services;
-using KCTest.Infrastructure;
 using KCTest.Infrastructure.Database;
 using KCTest.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
