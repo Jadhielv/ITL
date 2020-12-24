@@ -5,6 +5,7 @@ using KCTest.Domain;
 using KCTest.Domain.Services;
 using KCTest.Infrastructure;
 using KCTest.Infrastructure.Database;
+using KCTest.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,7 @@ namespace KCTest.API
             services.AddDbContext<KCTestContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.SetupUnitOfWork();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
