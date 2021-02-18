@@ -9,7 +9,7 @@ export default class HttpService {
 
   async get (endpoint = '') {
     try {
-      return await (await axios.get(`${this.baseUrl}/${endpoint}`)).data
+      return (await axios.get(`${this.baseUrl}/${endpoint}`)).data
     } catch (error) {
       console.log(error)
     }
@@ -17,7 +17,7 @@ export default class HttpService {
 
   async getById (endpoint = '', id = '') {
     try {
-      return await (await axios.get(`${this.baseUrl}/${endpoint}/${id}`)).data
+      return (await axios.get(`${this.baseUrl}/${endpoint}/${id}`)).data
     } catch (error) {
       console.log(error)
     }
@@ -25,7 +25,7 @@ export default class HttpService {
 
   async post (endpoint = '', body) {
     try {
-      return await (await axios.post(`${this.baseUrl}/${endpoint}`, body)).data
+      return (await axios.post(`${this.baseUrl}/${endpoint}`, body)).data
     } catch (error) {
       console.log(error)
     }
@@ -33,7 +33,7 @@ export default class HttpService {
 
   async put (endpoint = '', body) {
     try {
-      return await (await axios.put(`${this.baseUrl}/${endpoint}`, body)).data
+      return (await axios.put(`${this.baseUrl}/${endpoint}`, body)).data
     } catch (error) {
       console.log(error)
     }
@@ -41,7 +41,7 @@ export default class HttpService {
 
   async delete (endpoint = '', id) {
     try {
-      return await (await axios.delete(`${this.baseUrl}/${endpoint}/${id}`)).data
+      return (await axios.delete(`${this.baseUrl}/${endpoint}/${id}`)).data
     } catch (error) {
       console.log(error)
     }

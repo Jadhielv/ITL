@@ -5,12 +5,26 @@
           <b-button class="mb-2 btn btn-secondary" v-b-modal="'permissionForm'">Add new permission</b-button>
           <b-modal id="permissionForm" hide-footer v-if='showModal' @hidden="cleanModal()">
              <b-form>
+               <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                  <li v-for='error in errors' v-bind:key='error.id'>{{ error }}</li>
+                </ul>
+              </p>
                 <b-form-group class="font-weight-bold" id="input-group-1" label="Name:" label-for="input-1" description="Name">
-                  <b-form-input id="input-1" v-model="permission.name" type="text" v-on:keypress='isLetter($event)' required placeholder="Enter name"></b-form-input>
+                  <b-form-input id="input-1"
+                    v-model="permission.name"
+                    type="text"
+                    v-on:keypress='isLetter($event)'
+                    required placeholder="Enter name"></b-form-input>
                 </b-form-group>
 
                 <b-form-group class="font-weight-bold" id="input-group-1" label="Last Name:" label-for="input-1" description="Last Name">
-                  <b-form-input id="input-1" v-model="permission.lastName" type="text" v-on:keypress='isLetter($event)' required placeholder="Enter lastName"></b-form-input>
+                  <b-form-input id="input-1"
+                    v-model="permission.lastName"
+                    type="text"
+                    v-on:keypress='isLetter($event)'
+                    required placeholder="Enter lastName"></b-form-input>
                 </b-form-group>
 
                 <b-form-group class="font-weight-bold" id="input-group-1" label="Permission type:" label-for="input-1" description="Permission type">
@@ -19,10 +33,13 @@
                 </b-form-group>
 
                 <b-form-group class="font-weight-bold" id="input-group-1" label="Date:" label-for="input-1" description="Date">
-                  <b-form-input id="input-1" v-model="permission.date" type="date" required placeholder="Enter date"></b-form-input>
+                  <b-form-input id="input-1"
+                    v-model="permission.date"
+                    type="date"
+                    required placeholder="Enter date"></b-form-input>
                 </b-form-group>
 
-                <b-button class="float-right btn btn-secondary" v-on:click='addOrEditPermission()' variant="secondary">Save</b-button>
+                <b-button class="float-right btn btn-secondary" v-on:click='addOrEditPermission($event)' variant="secondary">Save</b-button>
               </b-form>
           </b-modal>
       </div>
@@ -69,25 +86,27 @@ export default {
     getElementValue: function (element) {
       return element?.description || element
     },
-    addOrEditPermission: async function () {
-      if (!this.isEditing) {
-        const result = await httpService.post('permission', this.permission)
-        this.permissions = [...this.permissions, this.permission]
-        if (result.success) {
-          this.$bvModal.hide('permissionForm')
-          this.cleanModal()
-          this.updatePermissions()
+    addOrEditPermission: async function (e) {
+      if (this.checkForm(e)) {
+        if (!this.isEditing) {
+          const result = await httpService.post('permission', this.permission)
+          this.permissions = [...this.permissions, this.permission]
+          if (result.success) {
+            this.$bvModal.hide('permissionForm')
+            this.cleanModal()
+            this.updatePermissions()
+          } else {
+            this.permissions = this.permissions.pop()
+          }
         } else {
-          this.permissions = this.permissions.pop()
+          const result = await httpService.put('permission', this.permission)
+          if (result.success) {
+            const index = this.permissions.indexOf(this.permission)
+            this.permissions[index] = this.permission
+            this.$bvModal.hide('permissionForm')
+            this.cleanModal()
+          } else { }
         }
-      } else {
-        const result = await httpService.put('permission', this.permission)
-        if (result.success) {
-          const index = this.permissions.indexOf(this.permission)
-          this.permissions[index] = this.permission
-          this.$bvModal.hide('permissionForm')
-          this.cleanModal()
-        } else { }
       }
     },
     editPermission: function (permission) {
@@ -105,6 +124,7 @@ export default {
     cleanModal: function () {
       this.permission = { id: undefined, name: '', lastName: '', permissionType: null, date: '' }
       this.isEditing = false
+      this.errors = []
     },
     countDownChanged: function (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
@@ -129,8 +149,30 @@ export default {
     },
     isLetter: function (e) {
       let char = String.fromCharCode(e.keyCode)
-      if (/^[A-Za-z]+$/.test(char)) return true
+      if (/^[A-Za-z\s]+$/.test(char)) return true
       else e.preventDefault()
+    },
+    checkForm: function (e) {
+      this.errors = []
+
+      if (!this.permission.name) {
+        this.errors.push('Name required.')
+      }
+      if (!this.permission.lastName) {
+        this.errors.push('Last Name required.')
+      }
+      if (!this.permission.permissionType) {
+        this.errors.push('Permission type required.')
+      }
+      if (!this.permission.date) {
+        this.errors.push('Date required.')
+      }
+
+      if (!this.errors.length) {
+        return true
+      }
+
+      e.preventDefault()
     }
   },
   data: function () {
@@ -138,6 +180,7 @@ export default {
       showModal: true,
       columns: ['Name', 'LastName', 'PermissionType', 'Date'],
       permissions: [],
+      errors: [],
       permission: { id: undefined, name: '', lastName: '', permissionType: null, date: '' },
       permissionTypes: [ { value: null, text: 'Please select an option' } ],
       isEditing: false,
