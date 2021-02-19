@@ -21,35 +21,36 @@ namespace KCTest.API.Controllers
         public async Task<ActionResult<IEnumerable<PermissionDto>>> Get()
         {
             var result = await _permissionService.GetPermissions(null);
-            return StatusCode(result.StatusCode, result.HttpResponse);
+
+            return Ok(result);
         }
 
         [HttpGet("{permissionId}")]
         public async Task<ActionResult<PermissionDto>> Get(int permissionId)
         {
             var result = await _permissionService.GetPermission(permissionId);
-            return StatusCode(result.StatusCode, result.HttpResponse);
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<ActionResult<PermissionDto>> Post([FromBody] PermissionDto permissionDto)
         {
             var result = await _permissionService.AddPermission(permissionDto);
-            return StatusCode(result.StatusCode, result.HttpResponse);
+            return Ok(result);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] PermissionDto permissionDto)
         {
-            var result = await _permissionService.UpdatePermission(permissionDto);
-            return StatusCode(result.StatusCode, result.HttpResponse);
+            await _permissionService.UpdatePermission(permissionDto);
+            return Ok();
         }
 
         [HttpDelete("{permissionId}")]
-        public async Task<ActionResult<PermissionDto>> Delete(int permissionId)
+        public async Task<IActionResult> Delete(int permissionId)
         {
-            var result = await _permissionService.DeletePermission(permissionId);
-            return StatusCode(result.StatusCode, result.HttpResponse);
+            await _permissionService.DeletePermission(permissionId);
+            return Ok();
         }
     }
 }

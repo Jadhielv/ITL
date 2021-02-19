@@ -1,5 +1,6 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using KCTest.API.Middlewares;
 using KCTest.Application.Services;
 using KCTest.Domain.Services;
 using KCTest.Infrastructure.Database;
@@ -74,6 +75,9 @@ namespace KCTest.API
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
+
+            // Use Exception Middleware
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseRouting();
 
