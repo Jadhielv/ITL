@@ -70,7 +70,7 @@ export default {
         if (!this.isEditing) {
           const result = await httpService.post('permissionType', this.permissionType)
           this.permissionTypes = [...this.permissionTypes, this.permissionType]
-          if (result.success) {
+          if (result) {
             this.$bvModal.hide('permissionTypeForm')
             this.cleanModal()
             this.updatePermissionTypes()
@@ -79,7 +79,7 @@ export default {
           }
         } else {
           const result = await httpService.put('permissionType', this.permissionType)
-          if (result.success) {
+          if (result !== undefined) {
             const index = this.permissionTypes.indexOf(this.permissionType)
             this.permissionTypes[index] = this.permissionType
             this.$bvModal.hide('permissionTypeForm')
@@ -94,7 +94,7 @@ export default {
     },
     deletePermissionType: async function (permissionType) {
       const result = await httpService.delete('permissionType', permissionType.id)
-      if (result.success) {
+      if (result !== undefined) {
         const index = this.permissionTypes.indexOf(permissionType)
         this.permissionTypes.splice(index, 1)
         this.showAlert()
@@ -115,9 +115,7 @@ export default {
       const permissionTypesRequestResult = await httpService.get('permissionType')
 
       if (typeof permissionTypesRequestResult !== 'undefined') {
-        if (permissionTypesRequestResult.success) {
-          this.permissionTypes = permissionTypesRequestResult.list
-        }
+        this.permissionTypes = permissionTypesRequestResult
       } else {
         alert('Service Unavailable: Network Error')
       }
@@ -158,9 +156,7 @@ export default {
     const permissionTypesRequestResult = await httpService.get('permissionType')
 
     if (typeof permissionTypesRequestResult !== 'undefined') {
-      if (permissionTypesRequestResult.success) {
-        this.permissionTypes = permissionTypesRequestResult.list
-      }
+      this.permissionTypes = permissionTypesRequestResult
     } else {
       alert('Service Unavailable: Network Error')
     }

@@ -91,7 +91,7 @@ export default {
         if (!this.isEditing) {
           const result = await httpService.post('permission', this.permission)
           this.permissions = [...this.permissions, this.permission]
-          if (result.success) {
+          if (result) {
             this.$bvModal.hide('permissionForm')
             this.cleanModal()
             this.updatePermissions()
@@ -100,7 +100,7 @@ export default {
           }
         } else {
           const result = await httpService.put('permission', this.permission)
-          if (result.success) {
+          if (result !== undefined) {
             const index = this.permissions.indexOf(this.permission)
             this.permissions[index] = this.permission
             this.$bvModal.hide('permissionForm')
@@ -115,7 +115,7 @@ export default {
     },
     deletePermission: async function (permission) {
       const result = await httpService.delete('permission', permission.id)
-      if (result.success) {
+      if (result !== undefined) {
         const index = this.permissions.indexOf(permission)
         this.permissions.splice(index, 1)
         this.showAlert()
@@ -136,13 +136,11 @@ export default {
       const permissionsRequestResult = await httpService.get('permission')
 
       if (typeof permissionsRequestResult !== 'undefined') {
-        if (permissionsRequestResult.success) {
-          permissionsRequestResult.list.forEach(function (item) {
-            item.date = moment(String(item.date)).format('YYYY-MM-DD')
-          })
+        permissionsRequestResult.forEach(function (item) {
+          item.date = moment(String(item.date)).format('YYYY-MM-DD')
+        })
 
-          this.permissions = permissionsRequestResult.list
-        }
+        this.permissions = permissionsRequestResult
       } else {
         alert('Service Unavailable: Network Error')
       }
@@ -193,13 +191,11 @@ export default {
     const permissionsRequestResult = await httpService.get('permission')
 
     if (typeof permissionsRequestResult !== 'undefined') {
-      if (permissionsRequestResult.success) {
-        permissionsRequestResult.list.forEach(function (item) {
-          item.date = moment(String(item.date)).format('YYYY-MM-DD')
-        })
+      permissionsRequestResult.forEach(function (item) {
+        item.date = moment(String(item.date)).format('YYYY-MM-DD')
+      })
 
-        this.permissions = permissionsRequestResult.list
-      }
+      this.permissions = permissionsRequestResult
     } else {
       alert('Service Unavailable: Network Error')
     }
@@ -207,11 +203,9 @@ export default {
     const permissionTypesRequestResult = await httpService.get('permissionType')
 
     if (typeof permissionTypesRequestResult !== 'undefined') {
-      if (permissionTypesRequestResult.success) {
-        this.permissionTypes = [ ...this.permissionTypes, ...permissionTypesRequestResult.list.map((x) => {
-          return { text: x.description, value: x }
-        })]
-      }
+      this.permissionTypes = [ ...this.permissionTypes, ...permissionTypesRequestResult.map((x) => {
+        return { text: x.description, value: x }
+      })]
     } else {
       alert('Service Unavailable: Network Error')
     }
