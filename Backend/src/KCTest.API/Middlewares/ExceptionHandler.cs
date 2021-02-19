@@ -33,9 +33,14 @@ namespace KCTest.API.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)GetStatusCode(exception);
 
+            // TODO: Log InternalServerError Exceptions
+
             var errorMessage = exception.InnerException?.Message ?? exception.Message;
 
-            await context.Response.WriteAsync(errorMessage);
+            // TODO: Use Json converter
+            var jsonMesage = $"{{\"message\": \"{errorMessage}\"}}";
+
+            await context.Response.WriteAsync(jsonMesage);
         }
 
         public HttpStatusCode GetStatusCode(Exception exception)
