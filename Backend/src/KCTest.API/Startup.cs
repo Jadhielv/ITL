@@ -62,11 +62,8 @@ namespace KCTest.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, KCTestContext kcContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            kcContext.Database.EnsureCreated();
-            kcContext.Database.Migrate();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
