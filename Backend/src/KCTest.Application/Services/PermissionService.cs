@@ -5,8 +5,6 @@ using KCTest.Domain.DTOs;
 using KCTest.Domain.Entities;
 using KCTest.Domain.Exceptions;
 using KCTest.Domain.Services;
-using KCTest.Infrastructure.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -44,7 +42,7 @@ namespace KCTest.Application.Services
                 throw new ConflictException("The permission doesn't exist");
 
             var permissionTypeExist = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionDto.PermissionType.Id);
-            
+
             if (!permissionTypeExist)
                 throw new ConflictException("The permission type doesn't exist.");
 

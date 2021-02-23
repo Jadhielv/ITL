@@ -5,8 +5,6 @@ using KCTest.Domain.DTOs;
 using KCTest.Domain.Entities;
 using KCTest.Domain.Exceptions;
 using KCTest.Domain.Services;
-using KCTest.Infrastructure.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
