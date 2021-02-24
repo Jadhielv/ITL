@@ -25,8 +25,7 @@ namespace KCTest.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("pagination")]
+        [HttpGet("pagination")]
         public async Task<ActionResult<IEnumerable<PermissionDto>>> Get([FromQuery] Pagination pagination)
         {
             var result = await _permissionService.GetPermissions(pagination);
