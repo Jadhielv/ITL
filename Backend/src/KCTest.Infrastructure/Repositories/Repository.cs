@@ -25,9 +25,9 @@ namespace KCTest.Infrastructure.Repositories
                                                                                                                      .Include(entitiesToInclude)
                                                                                                                      .ToListAsync();
         public async Task<IEnumerable<TEntity>> GetAllAsync(int skip, int limit, IEnumerable<Expression<Func<TEntity, bool>>> predicates,
-                                                                                 IEnumerable<string> entitiesToInclude) => await _entities.Skip(skip)
-                                                                                                                                          .Take(limit)
-                                                                                                                                          .Filter(predicates)
+                                                                                 IEnumerable<string> entitiesToInclude) => await _entities.Filter(predicates)
+                                                                                                                                          .Skip(skip)
+                                                                                                                                          .Take(limit)                                                                                                                                         
                                                                                                                                           .Include(entitiesToInclude)
                                                                                                                                           .ToListAsync();
         public void Delete(TEntity entity) => _entities.Remove(entity);
