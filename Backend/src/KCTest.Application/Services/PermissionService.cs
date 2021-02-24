@@ -6,6 +6,7 @@ using KCTest.Domain.Entities;
 using KCTest.Domain.Exceptions;
 using KCTest.Domain.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KCTest.Application.Services
@@ -74,12 +75,20 @@ namespace KCTest.Application.Services
             return permissionDto;
         }
 
-        public async Task<IEnumerable<PermissionDto>> GetPermissions(Pagination pagination = null)
+        public async Task<IEnumerable<PermissionDto>> GetPermissions()
         {
             var permissions = await _unitOfWork.PermissionRepository.GetAllAsync(entitiesToInclude: new List<string> { "PermissionType" });
             var permissionsDto = _mapper.Map<IEnumerable<PermissionDto>>(permissions);
 
             return permissionsDto;
+        }
+
+        public async Task<IEnumerable<PermissionDto>> GetPermissions(Pagination pagination)
+        {
+            var permissions = await _unitOfWork.PermissionRepository.GetAllAsync(entitiesToInclude: new List<string> { "PermissionType" });
+            var permissionsDto = _mapper.Map<IEnumerable<PermissionDto>>(permissions);
+
+            return permissionsDto.Skip(pagination.Skip).Take(pagination.Limit);
         }
     }
 }
