@@ -79,10 +79,10 @@ namespace KCTest.Application.Services
 
         public async Task<IEnumerable<PermissionTypeDto>> GetPermissionTypes(Pagination pagination)
         {
-            var permissionsType = await _unitOfWork.PermissionTypeRepository.GetAllAsync();
+            var permissionsType = await _unitOfWork.PermissionTypeRepository.GetAllAsync(pagination.Skip, pagination.Limit);
             var permissionsTypeDto = _mapper.Map<IEnumerable<PermissionTypeDto>>(permissionsType);
 
-            return permissionsTypeDto.Skip(pagination.Skip).Take(pagination.Limit);
+            return permissionsTypeDto;
         }
     }
 }
