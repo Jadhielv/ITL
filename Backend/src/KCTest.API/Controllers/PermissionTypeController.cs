@@ -1,4 +1,5 @@
-﻿using KCTest.Domain.DTOs;
+﻿using KCTest.Domain.Common;
+using KCTest.Domain.DTOs;
 using KCTest.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -20,7 +21,14 @@ namespace KCTest.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PermissionTypeDto>>> Get()
         {
-            var result = await _permissionTypeService.GetPermissionTypes(null);
+            var result = await _permissionTypeService.GetPermissionTypes();
+            return Ok(result);
+        }
+
+        [HttpGet("pagination")]
+        public async Task<ActionResult<IEnumerable<PermissionTypeDto>>> Get([FromQuery] Pagination pagination)
+        {
+            var result = await _permissionTypeService.GetPermissionTypes(pagination);
             return Ok(result);
         }
 

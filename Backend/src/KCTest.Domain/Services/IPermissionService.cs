@@ -11,6 +11,7 @@ namespace KCTest.Domain.Services
         Task UpdatePermission(PermissionDto permissionDto);
         Task DeletePermission(int permissionId);
         Task<PermissionDto> GetPermission(int permissionId);
-        Task<IEnumerable<PermissionDto>> GetPermissions(Pagination pagination = null);
+        Task<IEnumerable<PermissionDto>> GetPermissions();
+        Task<IEnumerable<PermissionDto>> GetPermissions(Pagination pagination);
     }
 }
