@@ -118,5 +118,24 @@ namespace KCTest.Tests.Services
             permissionRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Permission>()));
             unitOfWorkMock.Verify(x => x.SaveAsync());
         }
+
+        [Test]
+        public void GetPermission_PermissionNotFound_Should_ThrowsNotFoundException()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var permissionRepositoryMock = new Mock<IPermissionRepository>();
+
+            var service = new PermissionService(unitOfWorkMock.Object, null);
+
+            permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
+                .ReturnsAsync(false);
+
+            unitOfWorkMock.Setup(v => v.PermissionRepository)
+                .Returns(permissionRepositoryMock.Object);
+
+            // Act => Assert
+            Assert.ThrowsAsync<NotFoundException>(() => service.GetPermission(1), "The permission doesn't exist");
+        }
     }
 }
