@@ -140,6 +140,44 @@ namespace KCTest.Tests.Services
         }
 
         [Test]
+        public async Task GetPermission_PermissionFound_Should_ReturnsPermission()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var permissionRepositoryMock = new Mock<IPermissionRepository>();
+            var mapperMock = new Mock<IMapper>();
+            const int permissionId = 1;
+
+            var permission = new Permission
+            {
+                Id = permissionId,
+                Name = "Permission1"
+            };
+
+            var permissionDto = new PermissionDto();
+
+            var service = new PermissionService(unitOfWorkMock.Object, mapperMock.Object);
+
+            permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
+                .ReturnsAsync(true);
+
+            permissionRepositoryMock.Setup(x => x.GetByIdAsync(permissionId, It.IsAny<IEnumerable<string>>()))
+                .ReturnsAsync(permission);
+
+            mapperMock.Setup(x => x.Map<PermissionDto>(permission))
+                .Returns(permissionDto);
+
+            unitOfWorkMock.Setup(v => v.PermissionRepository)
+                .Returns(permissionRepositoryMock.Object);
+
+            // Act 
+            var result = await service.GetPermission(permissionId);
+
+            // Assert
+            Assert.AreEqual(permissionDto, result);
+        }
+
+        [Test]
         public void DeletePermission_PermissionNotFound_Should_ThrowsNotFoundException()
         {
             // Arrange
@@ -159,7 +197,7 @@ namespace KCTest.Tests.Services
         }
 
         [Test]
-        public async Task DeletePermission_PermissionFound_Should_ReturnsPermission()
+        public async Task DeletePermission_PermissionFound_Should_DeletePermission()
         {
             // Arrange
             var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -173,7 +211,7 @@ namespace KCTest.Tests.Services
                 Name = "Permission1"
             };
 
-            var service = new PermissionService(unitOfWorkMock.Object, null);
+            var service = new PermissionService(unitOfWorkMock.Object, mapperMock.Object);
 
             permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
                 .ReturnsAsync(true);
