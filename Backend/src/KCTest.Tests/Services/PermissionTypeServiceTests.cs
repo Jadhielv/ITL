@@ -61,5 +61,26 @@ namespace KCTest.Tests.Services
             permissionTypeRepositoryMock.Verify(x => x.AddAsync(It.IsAny<PermissionType>()));
             unitOfWorkMock.Verify(x => x.SaveAsync());
         }
+
+        [Test]
+        public void UpdatePermissionType_PermissionTypeNotFound_Should_ThrowsConflictException()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
+
+            var service = new PermissionTypeService(unitOfWorkMock.Object, null);
+
+            permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
+                .ReturnsAsync(false);
+
+            unitOfWorkMock.Setup(v => v.PermissionTypeRepository)
+                .Returns(permissionTypeRepositoryMock.Object);
+
+            var permissionType = new PermissionTypeDto();
+
+            // Act => Assert
+            Assert.ThrowsAsync<ConflictException>(() => service.UpdatePermissionType(permissionType), "The permission type doesn't exist.");
+        }
     }
 }
