@@ -8,6 +8,7 @@ using KCTest.Domain.Repositories;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -126,6 +127,36 @@ namespace KCTest.Tests.Services
 
             // Act => Assert
             Assert.ThrowsAsync<NotFoundException>(() => service.DeletePermissionType(1), "The permission type doesn't exist.");
+        }
+
+        [Test]
+        public async Task DeletePermissionType_PermissionTypeFound_Should_DeletePermissionType()
+        {
+            // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
+            var mapperMock = new Mock<IMapper>();
+            const int permissionTypeId = 1;
+
+            var permissionType = new PermissionType();
+
+            var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
+
+            permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
+                .ReturnsAsync(true);
+
+            permissionTypeRepositoryMock.Setup(x => x.GetByIdAsync(permissionTypeId, It.IsAny<IEnumerable<string>>()))
+                .ReturnsAsync(permissionType);
+
+            unitOfWorkMock.Setup(v => v.PermissionTypeRepository)
+                .Returns(permissionTypeRepositoryMock.Object);
+
+            // Act 
+            await service.DeletePermissionType(permissionTypeId);
+
+            // Assert
+            permissionTypeRepositoryMock.Verify(x => x.DeleteAsync(permissionType));
+            unitOfWorkMock.Verify(x => x.SaveAsync());
         }
     }
 }
