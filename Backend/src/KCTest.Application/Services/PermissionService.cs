@@ -24,8 +24,7 @@ namespace KCTest.Application.Services
         public async Task<PermissionDto> AddPermission(PermissionDto permissionDto)
         {
             var permission = _mapper.Map<Permission>(permissionDto);
-            var permissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permission.PermissionType.Id);
-            permission.PermissionType = permissionType;
+            permission.PermissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permission.PermissionType.Id);
 
             await _unitOfWork.PermissionRepository.AddAsync(permission);
             await _unitOfWork.SaveAsync();
