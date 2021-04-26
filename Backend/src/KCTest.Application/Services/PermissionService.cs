@@ -6,7 +6,6 @@ using KCTest.Domain.Entities;
 using KCTest.Domain.Exceptions;
 using KCTest.Domain.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KCTest.Application.Services
@@ -26,9 +25,7 @@ namespace KCTest.Application.Services
         {
             var permission = _mapper.Map<Permission>(permissionDto);
             var permissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permission.PermissionType.Id);
-
-            if (permissionType != null)
-                permission.PermissionType = permissionType;
+            permission.PermissionType = permissionType;
 
             await _unitOfWork.PermissionRepository.AddAsync(permission);
             await _unitOfWork.SaveAsync();

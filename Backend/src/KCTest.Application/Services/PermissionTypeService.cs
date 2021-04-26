@@ -6,7 +6,6 @@ using KCTest.Domain.Entities;
 using KCTest.Domain.Exceptions;
 using KCTest.Domain.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KCTest.Application.Services
@@ -21,6 +20,7 @@ namespace KCTest.Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
         public async Task<PermissionTypeDto> AddPermissionType(PermissionTypeDto permissionTypeDto)
         {
             var exists = await _unitOfWork.PermissionTypeRepository.ExistAsync(x => x.Id == permissionTypeDto.Id);
