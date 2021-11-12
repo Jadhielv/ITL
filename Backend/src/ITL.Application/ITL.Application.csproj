@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KCTest.Infrastructure\KCTest.Infrastructure.csproj" />
+    <ProjectReference Include="..\ITL.Infrastructure\ITL.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

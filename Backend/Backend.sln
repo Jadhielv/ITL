@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{204E2687-44FD-4671-A3C3-8DB3ABDEE800}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCTest.Application", "src\KCTest.Application\KCTest.Application.csproj", "{A1FA8445-16E8-4D50-B665-DFB458696333}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITL.Application", "src\ITL.Application\ITL.Application.csproj", "{A1FA8445-16E8-4D50-B665-DFB458696333}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCTest.Domain", "src\KCTest.Domain\KCTest.Domain.csproj", "{6ECC0C32-A5EB-4787-AEA1-65773E205BA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITL.Domain", "src\ITL.Domain\ITL.Domain.csproj", "{6ECC0C32-A5EB-4787-AEA1-65773E205BA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KCTest.API", "src\KCTest.API\KCTest.API.csproj", "{987664AB-8F96-4159-944A-E0B170A204AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITL.API", "src\ITL.API\ITL.API.csproj", "{987664AB-8F96-4159-944A-E0B170A204AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCTest.Infrastructure", "src\KCTest.Infrastructure\KCTest.Infrastructure.csproj", "{6D874FB0-21E7-4240-80E3-806801411C23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITL.Infrastructure", "src\ITL.Infrastructure\ITL.Infrastructure.csproj", "{6D874FB0-21E7-4240-80E3-806801411C23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KCTest.Tests", "src\KCTest.Tests\KCTest.Tests.csproj", "{A8D53FC0-DDE8-4F38-8427-536C7C877004}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITL.Tests", "src\ITL.Tests\ITL.Tests.csproj", "{A8D53FC0-DDE8-4F38-8427-536C7C877004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

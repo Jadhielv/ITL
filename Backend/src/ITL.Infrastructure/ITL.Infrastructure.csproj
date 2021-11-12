@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KCTest.Domain\KCTest.Domain.csproj" />
+    <ProjectReference Include="..\ITL.Domain\ITL.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

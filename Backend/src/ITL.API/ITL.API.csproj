@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KCTest.Application\KCTest.Application.csproj" />
+    <ProjectReference Include="..\ITL.Application\ITL.Application.csproj" />
   </ItemGroup>
 
 </Project>
