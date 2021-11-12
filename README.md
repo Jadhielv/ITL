@@ -5,11 +5,11 @@ Sample Web API implementation with .NET Core and DDD using Clean Architecture.
 The solution design focuses on a basic Domain Driven Design techniques and implementation, while keeping the things as simple as possible but can be extended as needed. Multiple assemblies are used for separation of concerns to keep logic isolated from the other components. **.NET 6 C#** is the default framework and language for this application.
 
 ### Assembly Layers
--   **KCTest.Domain**  - This assembly contains common, entities and interfaces.
--   **KCTest.Application**  - This assembly contains all services implementations.
--   **KCTest.Infrastructure**  - This assembly contains the infrastructure of data persistence.
--   **KCTest.API**  - This assembly is the web api host.
--   **KCTest.Tests**  - This assembly contains unit test classes based on the [NUnit](https://github.com/nunit/nunit) testing framework.
+-   **ITL.Domain**  - This assembly contains common, entities and interfaces.
+-   **ITL.Application**  - This assembly contains all services implementations.
+-   **ITL.Infrastructure**  - This assembly contains the infrastructure of data persistence.
+-   **ITL.API**  - This assembly is the web api host.
+-   **ITL.Tests**  - This assembly contains unit test classes based on the [NUnit](https://github.com/nunit/nunit) testing framework.
 
 ## How to contribute
 
