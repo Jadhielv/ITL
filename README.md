@@ -22,8 +22,8 @@ Data validation using [FluentValidation](https://github.com/JeremySkinner/Fluent
 [(Backend)](https://github.com/Jadhielv/ITL/tree/master/Backend)
 
 1. Create empty database, name: **`KCTest`**.
-2. Execute [migrations](https://github.com/Jadhielv/ITL/tree/master/Backend/src/KCTest.Infrastructure/Migrations).
-2. Set connection string (in [appsettings.json](https://github.com/Jadhielv/ITL/blob/master/Backend/src/KCTest.API/appsettings.json) or by user secrets mechanism).
+2. Execute [migrations](https://github.com/Jadhielv/ITL/tree/master/Backend/src/ITL.Infrastructure/Migrations).
+2. Set connection string (in [appsettings.json](https://github.com/Jadhielv/ITL/blob/master/Backend/src/ITL.API/appsettings.json) or by user secrets mechanism).
 3. Run .. .
 
 [(kctest-frontend)](https://github.com/Jadhielv/ITL/tree/master/kctest-frontend)
