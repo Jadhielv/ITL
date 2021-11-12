@@ -11,4 +11,4 @@
 
 ## Reporting a Vulnerability
 
-https://github.com/Jadhielv/KCTest/issues
+https://github.com/Jadhielv/ITL/issues
