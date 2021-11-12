@@ -1,11 +1,11 @@
-﻿using KCTest.Domain.Common;
-using KCTest.Domain.Exceptions;
+﻿using ITL.Domain.Common;
+using ITL.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace KCTest.API.Middlewares
+namespace ITL.API.Middlewares
 {
     public class ExceptionHandler
     {

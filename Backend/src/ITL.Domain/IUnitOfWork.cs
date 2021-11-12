@@ -1,8 +1,8 @@
-﻿using KCTest.Domain.Repositories;
+﻿using ITL.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
 
-namespace KCTest.Domain
+namespace ITL.Domain
 {
     public interface IUnitOfWork : IDisposable
     {

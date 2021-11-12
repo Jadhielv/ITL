@@ -1,9 +1,9 @@
-using KCTest.Domain;
-using KCTest.Infrastructure.Database;
+using ITL.Domain;
+using ITL.Infrastructure.Database;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
-namespace KCTest.Infrastructure.Repositories
+namespace ITL.Infrastructure.Repositories
 {
     public static class UnitOfWorkExtension
     {

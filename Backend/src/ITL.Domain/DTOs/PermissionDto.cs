@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KCTest.Domain.DTOs
+namespace ITL.Domain.DTOs
 {
     public class PermissionDto
     {

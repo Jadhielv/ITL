@@ -1,9 +1,9 @@
-﻿using KCTest.Domain.Entities;
+﻿using ITL.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace KCTest.Infrastructure.Database
+namespace ITL.Infrastructure.Database
 {
     public class PermissionEntityTypeConfiguration : IEntityTypeConfiguration<Permission>
     {

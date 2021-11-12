@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using KCTest.Domain;
-using KCTest.Domain.Common;
-using KCTest.Domain.DTOs;
-using KCTest.Domain.Entities;
-using KCTest.Domain.Exceptions;
-using KCTest.Domain.Services;
+using ITL.Domain;
+using ITL.Domain.Common;
+using ITL.Domain.DTOs;
+using ITL.Domain.Entities;
+using ITL.Domain.Exceptions;
+using ITL.Domain.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KCTest.Application.Services
+namespace ITL.Application.Services
 {
     public class PermissionService : IPermissionService
     {

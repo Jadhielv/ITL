@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace KCTest.Domain.Repositories
+namespace ITL.Domain.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using KCTest.Domain.DTOs;
-using KCTest.Domain.Entities;
+using ITL.Domain.DTOs;
+using ITL.Domain.Entities;
 
-namespace KCTest.Infrastructure.Mapper
+namespace ITL.Infrastructure.Mapper
 {
     public class MappingProfile : Profile
     {

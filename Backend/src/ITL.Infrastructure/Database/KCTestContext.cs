@@ -1,7 +1,7 @@
-﻿using KCTest.Domain.Entities;
+﻿using ITL.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace KCTest.Infrastructure.Database
+namespace ITL.Infrastructure.Database
 {
     public class KCTestContext : DbContext
     {

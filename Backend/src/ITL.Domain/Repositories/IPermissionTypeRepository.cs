@@ -1,6 +1,6 @@
-﻿using KCTest.Domain.Entities;
+﻿using ITL.Domain.Entities;
 
-namespace KCTest.Domain.Repositories
+namespace ITL.Domain.Repositories
 {
     public interface IPermissionTypeRepository : IRepository<PermissionType>
     {

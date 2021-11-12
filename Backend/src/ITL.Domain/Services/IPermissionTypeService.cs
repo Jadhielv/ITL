@@ -1,9 +1,9 @@
-﻿using KCTest.Domain.Common;
-using KCTest.Domain.DTOs;
+﻿using ITL.Domain.Common;
+using ITL.Domain.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KCTest.Domain.Services
+namespace ITL.Domain.Services
 {
     public interface IPermissionTypeService
     {

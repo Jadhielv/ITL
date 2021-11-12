@@ -1,4 +1,4 @@
-﻿namespace KCTest.Domain.Common
+﻿namespace ITL.Domain.Common
 {
     public class Pagination
     {

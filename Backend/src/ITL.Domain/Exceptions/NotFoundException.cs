@@ -1,6 +1,6 @@
-﻿using KCTest.Domain.Common;
+﻿using ITL.Domain.Common;
 
-namespace KCTest.Domain.Exceptions
+namespace ITL.Domain.Exceptions
 {
     public class NotFoundException : BaseException
     {

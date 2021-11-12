@@ -1,4 +1,4 @@
-﻿namespace KCTest.Domain.Entities
+﻿namespace ITL.Domain.Entities
 {
     public class PermissionType : BaseEntity
     {

@@ -1,9 +1,9 @@
-﻿using KCTest.Domain;
-using KCTest.Domain.Repositories;
-using KCTest.Infrastructure.Database;
+﻿using ITL.Domain;
+using ITL.Domain.Repositories;
+using ITL.Infrastructure.Database;
 using System.Threading.Tasks;
 
-namespace KCTest.Infrastructure
+namespace ITL.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {

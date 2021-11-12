@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "KCTest.API": {
+    "ITL.API": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

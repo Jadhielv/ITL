@@ -1,11 +1,11 @@
-﻿using KCTest.Domain.Common;
-using KCTest.Domain.DTOs;
-using KCTest.Domain.Services;
+﻿using ITL.Domain.Common;
+using ITL.Domain.DTOs;
+using ITL.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KCTest.API.Controllers
+namespace ITL.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

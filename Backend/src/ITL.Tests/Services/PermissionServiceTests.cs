@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using KCTest.Application.Services;
-using KCTest.Domain;
-using KCTest.Domain.DTOs;
-using KCTest.Domain.Entities;
-using KCTest.Domain.Exceptions;
-using KCTest.Domain.Repositories;
+using ITL.Application.Services;
+using ITL.Domain;
+using ITL.Domain.DTOs;
+using ITL.Domain.Entities;
+using ITL.Domain.Exceptions;
+using ITL.Domain.Repositories;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace KCTest.Tests.Services
+namespace ITL.Tests.Services
 {
     public class PermissionServiceTests
     {

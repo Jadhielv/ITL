@@ -1,6 +1,6 @@
-﻿using KCTest.Domain.Entities;
-using KCTest.Domain.Repositories;
-using KCTest.Infrastructure.Helpers;
+﻿using ITL.Domain.Entities;
+using ITL.Domain.Repositories;
+using ITL.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace KCTest.Infrastructure.Repositories
+namespace ITL.Infrastructure.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KCTest.Infrastructure.Migrations
+namespace ITL.Infrastructure.Migrations
 {
     public partial class AddOtros : Migration
     {

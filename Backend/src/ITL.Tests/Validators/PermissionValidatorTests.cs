@@ -1,10 +1,10 @@
 ﻿using FluentValidation.TestHelper;
-using KCTest.Domain.DTOs;
-using KCTest.Infrastructure.Validators;
+using ITL.Domain.DTOs;
+using ITL.Infrastructure.Validators;
 using NUnit.Framework;
 using System;
 
-namespace KCTest.Tests.Validators
+namespace ITL.Tests.Validators
 {
     [TestFixture]
     public class PermissionValidatorTests

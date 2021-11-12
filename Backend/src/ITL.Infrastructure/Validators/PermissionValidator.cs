@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using KCTest.Domain.DTOs;
+using ITL.Domain.DTOs;
 
-namespace KCTest.Infrastructure.Validators
+namespace ITL.Infrastructure.Validators
 {
     public class PermissionValidator : AbstractValidator<PermissionDto>
     {

@@ -1,10 +1,10 @@
 using AutoMapper;
 using FluentValidation.AspNetCore;
-using KCTest.API.Middlewares;
-using KCTest.Application.Services;
-using KCTest.Domain.Services;
-using KCTest.Infrastructure.Database;
-using KCTest.Infrastructure.Repositories;
+using ITL.API.Middlewares;
+using ITL.Application.Services;
+using ITL.Domain.Services;
+using ITL.Infrastructure.Database;
+using ITL.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +15,7 @@ using Microsoft.OpenApi.Models;
 using System.Linq;
 using System.Reflection;
 
-namespace KCTest.API
+namespace ITL.API
 {
     public class Startup
     {
@@ -57,7 +57,7 @@ namespace KCTest.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KCTest.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ITL.API", Version = "v1" });
             });
         }
 
@@ -68,7 +68,7 @@ namespace KCTest.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KCTest.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ITL.API v1"));
             }
 
             app.UseHttpsRedirection();

@@ -1,7 +1,7 @@
-﻿using KCTest.Domain.Common;
+﻿using ITL.Domain.Common;
 using System;
 
-namespace KCTest.Domain.Exceptions
+namespace ITL.Domain.Exceptions
 {
     public class BaseException : Exception
     {

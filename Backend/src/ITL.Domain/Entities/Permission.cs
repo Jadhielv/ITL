@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace KCTest.Domain.Entities
+namespace ITL.Domain.Entities
 {
     public class Permission : BaseEntity
     {
