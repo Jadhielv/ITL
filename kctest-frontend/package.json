@@ -15,7 +15,7 @@
     "@babel/runtime-corejs2": "^7.17.9",
     "axios": "^0.26.1",
     "bootstrap-vue": "^2.22.0",
-    "moment": "^2.29.2",
+    "moment": "^2.29.3",
     "vue": "^2.6.12",
     "vue-router": "^3.4.9"
   },
