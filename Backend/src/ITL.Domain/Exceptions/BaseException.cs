@@ -1,21 +1,20 @@
 ﻿using ITL.Domain.Common;
 using System;
 
-namespace ITL.Domain.Exceptions
+namespace ITL.Domain.Exceptions;
+
+public class BaseException : Exception
 {
-    public class BaseException : Exception
+    public HttpStatusCode StatusCode { get; }
+
+    public BaseException(HttpStatusCode statusCode)
     {
-        public HttpStatusCode StatusCode { get; }
+        StatusCode = statusCode;
+    }
 
-        public BaseException(HttpStatusCode statusCode)
-        {
-            StatusCode = statusCode;
-        }
-
-        public BaseException(HttpStatusCode statusCode, string message)
-        : base(message)
-        {
-            StatusCode = statusCode;
-        }
+    public BaseException(HttpStatusCode statusCode, string message)
+    : base(message)
+    {
+        StatusCode = statusCode;
     }
 }

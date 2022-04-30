@@ -1,7 +1,6 @@
-﻿namespace ITL.Domain.Entities
+﻿namespace ITL.Domain.Entities;
+
+public class PermissionType : BaseEntity
 {
-    public class PermissionType : BaseEntity
-    {
-        public string Description { get; set; }
-    }
+    public string Description { get; set; }
 }

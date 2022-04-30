@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
 using ITL.Domain.DTOs;
 
-namespace ITL.Infrastructure.Validators
+namespace ITL.Infrastructure.Validators;
+
+public class PermissionTypeValidator : AbstractValidator<PermissionTypeDto>
 {
-    public class PermissionTypeValidator : AbstractValidator<PermissionTypeDto>
+    public PermissionTypeValidator()
     {
-        public PermissionTypeValidator()
-        {
-            RuleFor(x => x.Description).NotNull();
-        }
+        RuleFor(x => x.Description).NotNull();
     }
 }

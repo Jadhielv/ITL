@@ -1,8 +1,7 @@
-﻿namespace ITL.Domain.DTOs
+﻿namespace ITL.Domain.DTOs;
+
+public class PermissionTypeDto
 {
-    public class PermissionTypeDto
-    {
-        public int Id { get; set; }
-        public string Description { get; set; }
-    }
+    public int Id { get; set; }
+    public string Description { get; set; }
 }

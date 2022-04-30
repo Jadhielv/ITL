@@ -1,8 +1,7 @@
 ﻿using ITL.Domain.Entities;
 
-namespace ITL.Domain.Repositories
+namespace ITL.Domain.Repositories;
+
+public interface IPermissionTypeRepository : IRepository<PermissionType>
 {
-    public interface IPermissionTypeRepository : IRepository<PermissionType>
-    {
-    }
 }
