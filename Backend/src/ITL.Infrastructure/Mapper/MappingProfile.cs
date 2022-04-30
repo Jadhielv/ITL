@@ -2,14 +2,13 @@
 using ITL.Domain.DTOs;
 using ITL.Domain.Entities;
 
-namespace ITL.Infrastructure.Mapper
+namespace ITL.Infrastructure.Mapper;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            CreateMap<PermissionDto, Permission>().ReverseMap();
-            CreateMap<PermissionTypeDto, PermissionType>().ReverseMap();
-        }
+        CreateMap<PermissionDto, Permission>().ReverseMap();
+        CreateMap<PermissionTypeDto, PermissionType>().ReverseMap();
     }
 }

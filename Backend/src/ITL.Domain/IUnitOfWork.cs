@@ -2,12 +2,11 @@
 using System;
 using System.Threading.Tasks;
 
-namespace ITL.Domain
+namespace ITL.Domain;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        IPermissionRepository PermissionRepository { get; set; }
-        IPermissionTypeRepository PermissionTypeRepository { get; set; }
-        Task<int> SaveAsync();
-    }
+    IPermissionRepository PermissionRepository { get; set; }
+    IPermissionTypeRepository PermissionTypeRepository { get; set; }
+    Task<int> SaveAsync();
 }
