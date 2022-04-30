@@ -20,7 +20,7 @@
     "vue-router": "^3.4.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.9",
+    "@babel/core": "^7.17.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.17.9",
     "@babel/plugin-proposal-export-namespace-from": "^7.12.1",
@@ -32,8 +32,8 @@
     "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/plugin-transform-async-to-generator": "^7.12.1",
     "@babel/plugin-transform-modules-commonjs": "^7.17.9",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/plugin-transform-runtime": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "autoprefixer": "^7.2.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
