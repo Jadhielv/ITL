@@ -30,7 +30,7 @@ Data validation using [FluentValidation](https://github.com/JeremySkinner/Fluent
 
 Follow the instructions in [README](https://github.com/Jadhielv/ITL/blob/master/kctest-frontend/README.md) file.
 
-## Give a Star!
+## ¡Give a Star!
 
 If you like this project, learn something or you are using it in your applications, please give it a star. Thanks! .. .
 
