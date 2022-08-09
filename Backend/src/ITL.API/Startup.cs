@@ -30,8 +30,8 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddMvc();
-        services.AddFluentValidationAutoValidation()
-            .AddValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
         services.AddDbContext<KCTestContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
