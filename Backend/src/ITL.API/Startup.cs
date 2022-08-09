@@ -1,4 +1,4 @@
-using AutoMapper;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using ITL.API.Middlewares;
 using ITL.Application.Services;
@@ -29,8 +29,9 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers().AddFluentValidation(config =>
-            config.RegisterValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load)));
+        services.AddMvc();
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
         services.AddDbContext<KCTestContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
