@@ -65,7 +65,7 @@
     "node-notifier": "^8.0.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
-    "portfinder": "^1.0.29",
+    "portfinder": "^1.0.32",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.3.2",
