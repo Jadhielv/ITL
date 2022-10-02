@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ITL.Application\ITL.Application.csproj" />
+    <ProjectReference Include="..\ITL.Domain\ITL.Domain.csproj" />
   </ItemGroup>
 
 </Project>

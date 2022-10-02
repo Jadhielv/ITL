@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ITL.Domain\ITL.Domain.csproj" />
     <ProjectReference Include="..\ITL.Infrastructure\ITL.Infrastructure.csproj" />
   </ItemGroup>
 
