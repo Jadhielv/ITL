@@ -12,7 +12,7 @@ namespace ITL.Infrastructure.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly DbSet<TEntity> _entities;
+    protected readonly DbSet<TEntity> _entities;
 
     public Repository(DbSet<TEntity> entities) => _entities = entities;
 
