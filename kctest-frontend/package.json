@@ -14,7 +14,7 @@
   "dependencies": {
     "@babel/runtime-corejs2": "^7.19.6",
     "axios": "^0.27.2",
-    "bootstrap-vue": "^2.22.0",
+    "bootstrap-vue": "^2.23.1",
     "moment": "^2.29.4",
     "vue": "^2.7.4",
     "vue-router": "^3.5.4"
