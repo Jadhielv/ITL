@@ -174,7 +174,7 @@ public class PermissionServiceTests
         var result = await service.GetPermission(permissionId);
 
         // Assert
-        Assert.AreEqual(permissionDto, result);
+        Assert.That(permissionDto, Is.EqualTo(result));
     }
 
     [Test]

@@ -213,6 +213,6 @@ public class PermissionTypeServiceTests
         var result = await service.GetPermissionType(permissionTypeId);
 
         // Assert
-        Assert.AreEqual(permissionTypeDto, result);
+        Assert.That(permissionTypeDto, Is.EqualTo(result));
     }
 }
