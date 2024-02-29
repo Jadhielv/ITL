@@ -12,7 +12,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.23.9",
+    "@babel/runtime-corejs2": "^7.24.0",
     "axios": "^1.6.7",
     "bootstrap-vue": "^2.23.1",
     "moment": "^2.30.1",
