@@ -9,7 +9,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.17" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.17" NoWarn="NU1605" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.16">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
