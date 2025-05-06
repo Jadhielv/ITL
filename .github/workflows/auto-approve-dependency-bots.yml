@@ -11,23 +11,23 @@ on:
 
 jobs:
   auto-approve:
-    if: github.event_name != 'pull_request' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
+    if: github.event_name != 'pull_request_target' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Auto-approve PRs from bots
         uses: hmarr/auto-approve-action@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
           pull-request-number: ${{ github.event.inputs.pullRequestNumber }}
 
   auto-merge:
-    if: github.event_name != 'pull_request' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
+    if: github.event_name != 'pull_request_target' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
     needs: auto-approve
     runs-on: ubuntu-latest
     steps:
       - name: Auto-merge PRs from bots
         uses: pascalgn/automerge-action@v0.16.4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           PULL_REQUEST: ${{ github.event.inputs.pullRequestNumber }}
           MERGE_LABELS: ""
