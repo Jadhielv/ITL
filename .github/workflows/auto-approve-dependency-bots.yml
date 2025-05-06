@@ -3,24 +3,31 @@ name: Auto Approve and Merge for Dependency Bots
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+  workflow_dispatch:
+    inputs: 
+      pullRequestNumber:
+        description: Pull request number to auto-approve
+        required: true
 
 jobs:
   auto-approve:
-    if: github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
+    if: github.event_name != 'pull_request' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Auto approve PR
-        uses: hmarr/auto-approve-action@v3
+      - name: Auto-approve PRs from bots
+        uses: hmarr/auto-approve-action@v4
         with:
-          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ github.event.inputs.pullRequestNumber }}
 
   auto-merge:
+    if: github.event_name != 'pull_request' || github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
     needs: auto-approve
-    if: github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Enable auto-merge
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GH_ACCESS_TOKEN }}
-          merge-method: squash
+      - name: Auto-merge PRs from bots
+        uses: pascalgn/automerge-action@v0.16.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST: ${{ github.event.inputs.pullRequestNumber }}
+          MERGE_LABELS: ""
