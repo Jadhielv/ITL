@@ -1,0 +1,26 @@
+name: Auto Approve and Merge for Dependency Bots
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  auto-approve:
+    if: github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto approve PR
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GH_ACCESS_TOKEN }}
+
+  auto-merge:
+    needs: auto-approve
+    if: github.actor == 'dependabot[bot]' || github.actor == 'depfu[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable auto-merge
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          merge-method: squash
