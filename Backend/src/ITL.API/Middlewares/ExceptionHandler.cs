@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ITL.API.Middlewares;
 
@@ -42,11 +43,8 @@ public class ExceptionHandler
         }
 
         var errorMessage = exception.InnerException?.Message ?? exception.Message;
-
-        // TODO: Use Json converter
-        var jsonMesage = $"{{\"message\": \"{errorMessage}\"}}";
-
-        await context.Response.WriteAsync(jsonMesage);
+        var jsonMessage = JsonConvert.SerializeObject(new { message = errorMessage });
+        await context.Response.WriteAsync(jsonMessage);
     }
 
     public HttpStatusCode GetStatusCode(Exception exception)
