@@ -1,6 +1,7 @@
 ﻿using ITL.Domain.Common;
 using ITL.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace ITL.API.Middlewares;
 public class ExceptionHandler
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<ExceptionHandler> _logger;
 
-    public ExceptionHandler(RequestDelegate next)
+    public ExceptionHandler(RequestDelegate next, ILogger<ExceptionHandler> logger)
     {
         _next = next;
+        _logger = logger;
     }
 
     public async Task InvokeAsync(HttpContext httpContext)
@@ -33,7 +36,10 @@ public class ExceptionHandler
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)GetStatusCode(exception);
 
-        // TODO: Log InternalServerError Exceptions
+        if (context.Response.StatusCode == (int)HttpStatusCode.InternalServerError)
+        {
+            _logger.LogError(exception, "An internal server error occurred: {Message}", exception.Message);
+        }
 
         var errorMessage = exception.InnerException?.Message ?? exception.Message;
 
