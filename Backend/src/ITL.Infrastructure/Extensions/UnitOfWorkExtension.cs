@@ -1,4 +1,5 @@
 using ITL.Domain;
+using ITL.Domain.Repositories;
 using ITL.Infrastructure.Database;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -9,17 +10,10 @@ public static class UnitOfWorkExtension
 {
     public static IServiceCollection SetupUnitOfWork([NotNullAttribute] this IServiceCollection serviceCollection)
     {
-        //TODO: Find a way to inject the repositories and share the same context without creating a instance.
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>(f =>
-        {
-            var scopeFactory = f.GetRequiredService<IServiceScopeFactory>();
-            var context = f.GetService<KCTestContext>();
-            return new UnitOfWork(
-                context,
-                new PermissionRepository(context.Permissions),
-                new PermissionTypeRepository(context.PermissionTypes)
-            );
-        });
+        // Register repositories with DI, sharing the same DbContext instance
+        serviceCollection.AddScoped<IPermissionRepository, PermissionRepository>();
+        serviceCollection.AddScoped<IPermissionTypeRepository, PermissionTypeRepository>();
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
         return serviceCollection;
     }
 }
