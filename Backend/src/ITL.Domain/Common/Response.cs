@@ -13,7 +13,7 @@ public enum HttpStatusCode
     Conflict = 409,
     TooEarly = 425,
     InternalServerError = 500,
-    BadGateway = 501,
+    BadGateway = 502,
     ServiceUnavailable = 503,
     HTTPVersionNotSupported = 505
 }
