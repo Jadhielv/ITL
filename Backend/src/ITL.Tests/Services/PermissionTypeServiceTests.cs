@@ -48,6 +48,13 @@ public class PermissionTypeServiceTests
         var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
 
         var permissionType = new PermissionTypeDto { };
+        var expectedDto = new PermissionTypeDto();
+        var permissionTypeEntity = new PermissionType();
+
+        mapperMock.Setup(x => x.Map<PermissionType>(permissionType))
+            .Returns(permissionTypeEntity);
+        mapperMock.Setup(x => x.Map<PermissionTypeDto>(permissionTypeEntity))
+            .Returns(expectedDto);
 
         permissionTypeRepositoryMock.Setup(x => x.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(false);
@@ -56,9 +63,10 @@ public class PermissionTypeServiceTests
             .Returns(permissionTypeRepositoryMock.Object);
 
         // Act
-        await service.AddPermissionType(permissionType);
+        var result = await service.AddPermissionType(permissionType);
 
         // Assert
+        Assert.That(result, Is.EqualTo(expectedDto));
         permissionTypeRepositoryMock.Verify(x => x.AddAsync(It.IsAny<PermissionType>()));
         unitOfWorkMock.Verify(x => x.SaveAsync());
     }
