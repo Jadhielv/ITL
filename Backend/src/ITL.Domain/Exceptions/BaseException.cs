@@ -1,4 +1,4 @@
-﻿using ITL.Domain.Common;
+using System.Net;
 using System;
 
 namespace ITL.Domain.Exceptions;
