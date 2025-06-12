@@ -1,9 +1,8 @@
-﻿using ITL.Domain.Common;
+using System.Net;
 using ITL.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
