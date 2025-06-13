@@ -24,7 +24,7 @@ Data validation using [FluentValidation](https://github.com/JeremySkinner/Fluent
 1. Create empty database, name: **`KCTest`**.
 2. Execute [migrations](https://github.com/Jadhielv/ITL/tree/master/Backend/src/ITL.Infrastructure/Migrations).
 3. Set connection string (in [appsettings.json](https://github.com/Jadhielv/ITL/blob/master/Backend/src/ITL.API/appsettings.json) or by user secrets mechanism).
-4. Run .. .
+4. Run `dotnet run --project Backend/src/ITL.API` to start the API.
 
 [(kctest-frontend)](https://github.com/Jadhielv/ITL/tree/master/kctest-frontend)
 

@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
-    "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
+    "test": "npm run unit",
+    "lint": "eslint --config .eslintrc.js --ext .js,.vue src test/unit",
     "build": "node build/build.js"
   },
   "dependencies": {
@@ -84,8 +85,8 @@
     "webpack-merge": "^4.2.2"
   },
   "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">= 18.0.0",
+    "npm": ">= 9.0.0"
   },
   "browserslist": [
     "> 1%",

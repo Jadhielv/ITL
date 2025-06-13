@@ -1,0 +1,12 @@
+# Ignore node modules and logs
+node_modules/
+*.log
+
+# Ignore build outputs
+bin/
+obj/
+*/bin/
+*/obj/
+
+# VSCode settings
+.vscode/
