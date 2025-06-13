@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
-    "lint": "eslint --config .eslintrc.js --ext .js,.vue src test/unit",
+    "lint": "eslint --ext .js,.vue src test/unit",
     "build": "node build/build.js"
   },
   "dependencies": {
