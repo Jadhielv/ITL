@@ -14,6 +14,7 @@ module.exports = {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
     '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest'
   },
+  testEnvironment: 'jsdom',
   testPathIgnorePatterns: [
     '<rootDir>/test/e2e'
   ],
