@@ -38,7 +38,11 @@ public class Startup
 
         services.SetupUnitOfWork();
 
-        services.AddAutoMapper(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
+        services.AddAutoMapper(
+            Assembly.GetExecutingAssembly()
+                .GetReferencedAssemblies()
+                .Select(Assembly.Load)
+                .ToArray());
 
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IPermissionTypeService, PermissionTypeService>();
