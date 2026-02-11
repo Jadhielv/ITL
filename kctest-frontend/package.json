@@ -92,16 +92,16 @@
     "serialize-javascript": "^6.0.2",
     "json5": "^2.2.2",
     "loader-utils": "^2.0.4",
+    "ajv": "^6.12.6",
+    "postcss": "^8.4.49",
+    "ajv-formats": {
+      "ajv": "^8.17.1"
+    },
+    "ajv-keywords": {
+      "ajv": "^8.17.1"
+    },
     "eslint": {
-      "ajv": "^6.12.6",
       "tmp": "^0.2.4"
-    },
-    "extract-text-webpack-plugin": {
-      "ajv": "^6.12.6",
-      "postcss": "^8.4.31"
-    },
-    "table": {
-      "ajv": "^6.12.6"
     }
   },
   "engines": {
