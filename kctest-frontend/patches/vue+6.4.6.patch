@@ -1,0 +1,114 @@
+diff --git a/node_modules/vue/dist/vue.common.dev.js b/node_modules/vue/dist/vue.common.dev.js
+index c33e1d1..c82121f 100644
+--- a/node_modules/vue/dist/vue.common.dev.js
++++ b/node_modules/vue/dist/vue.common.dev.js
+@@ -9329,7 +9329,7 @@ function transformNode$1(el, options) {
+ }
+ function genData$2(el) {
+     let data = '';
+-    if (el.staticClass) {
++    if (Object.prototype.hasOwnProperty.call(el, 'staticClass')) {
+         data += `staticClass:${el.staticClass},`;
+     }
+     if (el.classBinding) {
+@@ -9366,7 +9366,7 @@ function transformNode(el, options) {
+ }
+ function genData$1(el) {
+     let data = '';
+-    if (el.staticStyle) {
++    if (Object.prototype.hasOwnProperty.call(el, 'staticStyle')) {
+         data += `staticStyle:${el.staticStyle},`;
+     }
+     if (el.styleBinding) {
+diff --git a/node_modules/vue/dist/vue.esm.browser.js b/node_modules/vue/dist/vue.esm.browser.js
+index a0c1533..c6399bc 100644
+--- a/node_modules/vue/dist/vue.esm.browser.js
++++ b/node_modules/vue/dist/vue.esm.browser.js
+@@ -9261,7 +9261,7 @@ function transformNode$1(el, options) {
+ }
+ function genData$2(el) {
+     let data = '';
+-    if (el.staticClass) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticClass')) {
+         data += `staticClass:${el.staticClass},`;
+     }
+     if (el.classBinding) {
+@@ -9298,7 +9298,7 @@ function transformNode(el, options) {
+ }
+ function genData$1(el) {
+     let data = '';
+-    if (el.staticStyle) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticStyle')) {
+         data += `staticStyle:${el.staticStyle},`;
+     }
+     if (el.styleBinding) {
+diff --git a/node_modules/vue/dist/vue.esm.js b/node_modules/vue/dist/vue.esm.js
+index 63c4699..2c068e1 100644
+--- a/node_modules/vue/dist/vue.esm.js
++++ b/node_modules/vue/dist/vue.esm.js
+@@ -9422,7 +9422,7 @@ function transformNode$1(el, options) {
+ }
+ function genData$2(el) {
+     var data = '';
+-    if (el.staticClass) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticClass')) {
+         data += "staticClass:".concat(el.staticClass, ",");
+     }
+     if (el.classBinding) {
+@@ -9459,7 +9459,7 @@ function transformNode(el, options) {
+ }
+ function genData$1(el) {
+     var data = '';
+-    if (el.staticStyle) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticStyle')) {
+         data += "staticStyle:".concat(el.staticStyle, ",");
+     }
+     if (el.styleBinding) {
+diff --git a/node_modules/vue/dist/vue.js b/node_modules/vue/dist/vue.js
+index ec06b7b..a18dc8e 100644
+--- a/node_modules/vue/dist/vue.js
++++ b/node_modules/vue/dist/vue.js
+@@ -9419,7 +9419,7 @@
+   }
+   function genData$2(el) {
+       var data = '';
+-      if (el.staticClass) {
++      if (Object.prototype.hasOwnProperty.call(el, 'staticClass')) {
+           data += "staticClass:".concat(el.staticClass, ",");
+       }
+       if (el.classBinding) {
+@@ -9456,7 +9456,7 @@
+   }
+   function genData$1(el) {
+       var data = '';
+-      if (el.staticStyle) {
++      if (Object.prototype.hasOwnProperty.call(el, 'staticStyle')) {
+           data += "staticStyle:".concat(el.staticStyle, ",");
+       }
+       if (el.styleBinding) {
+diff --git a/node_modules/vue/src/platforms/web/compiler/modules/class.ts b/node_modules/vue/src/platforms/web/compiler/modules/class.ts
+index b783787..18ee0aa 100644
+--- a/node_modules/vue/src/platforms/web/compiler/modules/class.ts
++++ b/node_modules/vue/src/platforms/web/compiler/modules/class.ts
+@@ -28,7 +28,7 @@ function transformNode(el: ASTElement, options: CompilerOptions) {
+
+ function genData(el: ASTElement): string {
+   let data = ''
+-  if (el.staticClass) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticClass')) {
+     data += `staticClass:${el.staticClass},`
+   }
+   if (el.classBinding) {
+diff --git a/node_modules/vue/src/platforms/web/compiler/modules/style.ts b/node_modules/vue/src/platforms/web/compiler/modules/style.ts
+index 67e8524..fce6c05 100644
+--- a/node_modules/vue/src/platforms/web/compiler/modules/style.ts
++++ b/node_modules/vue/src/platforms/web/compiler/modules/style.ts
+@@ -31,7 +31,7 @@ function transformNode(el: ASTElement, options: CompilerOptions) {
+
+ function genData(el: ASTElement): string {
+   let data = ''
+-  if (el.staticStyle) {
++  if (Object.prototype.hasOwnProperty.call(el, 'staticStyle')) {
+     data += `staticStyle:${el.staticStyle},`
+   }
+   if (el.styleBinding) {

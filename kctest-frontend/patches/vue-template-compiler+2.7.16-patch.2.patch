@@ -1,0 +1,13 @@
+diff --git a/node_modules/vue-template-compiler/index.js b/node_modules/vue-template-compiler/index.js
+index ff4d4fe..914abff 100644
+--- a/node_modules/vue-template-compiler/index.js
++++ b/node_modules/vue-template-compiler/index.js
+@@ -9,7 +9,7 @@ function getBaseVersion(v) {
+   return String(v).split(/-patch/)[0]
+ }
+
+-if (vueVersion && vueVersion !== getBaseVersion(packageVersion)) {
++if (vueVersion && vueVersion !== getBaseVersion(packageVersion) && !vueVersion.startsWith('6.')) {
+   var vuePath = require.resolve('vue')
+   var packagePath = require.resolve('./package.json')
+   throw new Error(
