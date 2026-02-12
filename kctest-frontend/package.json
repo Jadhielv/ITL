@@ -10,14 +10,15 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@babel/runtime-corejs2": "^7.27.3",
     "axios": "1.13.5",
     "bootstrap-vue": "^2.23.1",
     "moment": "^2.30.1",
-    "vue": "2.7.16",
+    "vue": "npm:@lastboy/vue2@^6.4.6",
     "vue-router": "^3.5.4"
   },
   "devDependencies": {
@@ -68,6 +69,7 @@
     "node-notifier": "^8.0.2",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "ora": "^1.2.0",
+    "patch-package": "^8.0.0",
     "portfinder": "^1.0.37",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.4",
@@ -80,9 +82,10 @@
     "vue-jest": "^3.0.7",
     "vue-loader": "^15.11.1",
     "vue-style-loader": "^4.1.3",
-    "vue-template-compiler": "2.7.16",
+    "vue-template-compiler": "npm:vue-template-compiler-patched@^2.7.16-patch.2",
     "webpack": "5.105.1",
     "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1",
     "webpack-merge": "^4.2.2"
   },
@@ -92,7 +95,6 @@
     "serialize-javascript": "^6.0.2",
     "json5": "^2.2.2",
     "loader-utils": "^2.0.4",
-    "ajv": "^6.12.6",
     "postcss": "^8.4.49",
     "ajv-formats": {
       "ajv": "^8.17.1"
@@ -101,6 +103,7 @@
       "ajv": "^8.17.1"
     },
     "eslint": {
+      "ajv": "^6.12.6",
       "tmp": "^0.2.4"
     }
   },
