@@ -105,6 +105,9 @@
     "eslint": {
       "ajv": "^6.12.6",
       "tmp": "^0.2.4"
+    },
+    "extract-text-webpack-plugin": {
+      "ajv": "^6.12.6"
     }
   },
   "engines": {
