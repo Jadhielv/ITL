@@ -2,7 +2,7 @@
 Sample Web API implementation with .NET Core and DDD using Clean Architecture.
 
 ## Solution Design
-The solution design focuses on a basic Domain Driven Design techniques and implementation, while keeping the things as simple as possible but can be extended as needed. Multiple assemblies are used for separation of concerns to keep logic isolated from the other components. **.NET 9 C#** is the default framework and language for this application.
+The solution design focuses on a basic Domain Driven Design techniques and implementation, while keeping the things as simple as possible but can be extended as needed. Multiple assemblies are used for separation of concerns to keep logic isolated from the other components. **.NET 10 C#** is the default framework and language for this application.
 
 ### Assembly Layers
 -   **ITL.Domain**  - This assembly contains common, entities and interfaces.
