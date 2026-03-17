@@ -39,8 +39,6 @@ public class Startup
 
         services.SetupUnitOfWork();
 
-        services.AddScoped<IMapper, ITL.Infrastructure.Mapper.CustomMapper>();
-
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IPermissionTypeService, PermissionTypeService>();
 

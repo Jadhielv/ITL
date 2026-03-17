@@ -22,7 +22,7 @@ public class PermissionTypeServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, null);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         var permissionType = new PermissionTypeDto { };
 
@@ -42,18 +42,10 @@ public class PermissionTypeServiceTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
-        var mapperMock = new Mock<IMapper>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
-        var permissionType = new PermissionTypeDto { };
-        var expectedDto = new PermissionTypeDto();
-        var permissionTypeEntity = new PermissionType();
-
-        mapperMock.Setup(x => x.Map<PermissionType>(permissionType))
-            .Returns(permissionTypeEntity);
-        mapperMock.Setup(x => x.Map<PermissionTypeDto>(permissionTypeEntity))
-            .Returns(expectedDto);
+        var permissionTypeDto = new PermissionTypeDto { Id = 1, Description = "Type1" };
 
         permissionTypeRepositoryMock.Setup(x => x.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(false);
@@ -62,10 +54,11 @@ public class PermissionTypeServiceTests
             .Returns(permissionTypeRepositoryMock.Object);
 
         // Act
-        var result = await service.AddPermissionType(permissionType);
+        var result = await service.AddPermissionType(permissionTypeDto);
 
         // Assert
-        Assert.That(result, Is.EqualTo(expectedDto));
+        Assert.That(result.Id, Is.EqualTo(permissionTypeDto.Id));
+        Assert.That(result.Description, Is.EqualTo(permissionTypeDto.Description));
         permissionTypeRepositoryMock.Verify(x => x.AddAsync(It.IsAny<PermissionType>()));
         unitOfWorkMock.Verify(x => x.SaveAsync());
     }
@@ -77,7 +70,7 @@ public class PermissionTypeServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, null);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(false);
@@ -97,9 +90,8 @@ public class PermissionTypeServiceTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
-        var mapperMock = new Mock<IMapper>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(true);
@@ -124,7 +116,7 @@ public class PermissionTypeServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, null);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(false);
@@ -142,12 +134,11 @@ public class PermissionTypeServiceTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
-        var mapperMock = new Mock<IMapper>();
         const int permissionTypeId = 1;
 
         var permissionType = new PermissionType();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(true);
@@ -173,7 +164,7 @@ public class PermissionTypeServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, null);
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(false);
@@ -190,36 +181,31 @@ public class PermissionTypeServiceTests
     {
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
-        var permissionRepositoryMock = new Mock<IPermissionTypeRepository>();
-        var mapperMock = new Mock<IMapper>();
+        var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
         const int permissionTypeId = 1;
 
-        var permission = new PermissionType
+        var permissionType = new PermissionType
         {
             Id = permissionTypeId,
             Description = "PermissionType1"
         };
 
-        var permissionTypeDto = new PermissionTypeDto();
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
 
-        var service = new PermissionTypeService(unitOfWorkMock.Object, mapperMock.Object);
-
-        permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
+        permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(true);
 
-        permissionRepositoryMock.Setup(x => x.GetByIdAsync(permissionTypeId, It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(permission);
-
-        mapperMock.Setup(x => x.Map<PermissionTypeDto>(permission))
-            .Returns(permissionTypeDto);
+        permissionTypeRepositoryMock.Setup(x => x.GetByIdAsync(permissionTypeId, It.IsAny<IEnumerable<string>>()))
+            .ReturnsAsync(permissionType);
 
         unitOfWorkMock.Setup(v => v.PermissionTypeRepository)
-            .Returns(permissionRepositoryMock.Object);
+            .Returns(permissionTypeRepositoryMock.Object);
 
         // Act 
         var result = await service.GetPermissionType(permissionTypeId);
 
         // Assert
-        Assert.That(permissionTypeDto, Is.EqualTo(result));
+        Assert.That(permissionType.Id, Is.EqualTo(result.Id));
+        Assert.That(permissionType.Description, Is.EqualTo(result.Description));
     }
 }
