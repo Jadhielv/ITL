@@ -4,6 +4,7 @@ using ITL.API.Middlewares;
 using ITL.Application.Services;
 using ITL.Domain;
 using ITL.Domain.Services;
+using ITL.Infrastructure.Mapper;
 using ITL.Infrastructure.Database;
 using ITL.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +40,7 @@ public class Startup
 
         services.SetupUnitOfWork();
 
-        services.AddScoped<IMapper, ITL.Infrastructure.Mapper.CustomMapper>();
+        services.AddScoped<IMapper, CustomMapper>();
 
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IPermissionTypeService, PermissionTypeService>();
