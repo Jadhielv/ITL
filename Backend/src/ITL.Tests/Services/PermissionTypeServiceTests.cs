@@ -1,4 +1,3 @@
-﻿using AutoMapper;
 using ITL.Application.Services;
 using ITL.Domain;
 using ITL.Domain.DTOs;
