@@ -93,10 +93,17 @@
     "tmp": "^0.2.5",
     "cross-spawn": "7.0.6",
     "babel-traverse": "npm:@babel/traverse@^7.23.2",
-    "serialize-javascript": "^6.0.2",
+    "serialize-javascript": "^7.0.4",
     "json5": "^2.2.2",
     "loader-utils": "^2.0.4",
     "postcss": "^8.4.49",
+    "minimatch": "^3.1.5",
+    "editorconfig": {
+      "minimatch": "^9.0.7"
+    },
+    "js-beautify": {
+      "minimatch": "^9.0.7"
+    },
     "ajv-formats": {
       "ajv": "^8.17.1"
     },
