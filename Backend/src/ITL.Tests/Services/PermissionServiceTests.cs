@@ -28,7 +28,7 @@ public class PermissionServiceTests
             Name = "Permission 1"
         };
 
-        var service = new PermissionService(unitOfWorkMock.Object, null);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(false);
@@ -59,7 +59,7 @@ public class PermissionServiceTests
             }
         };
 
-        var service = new PermissionService(unitOfWorkMock.Object, null);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(true);
@@ -84,7 +84,6 @@ public class PermissionServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionRepositoryMock = new Mock<IPermissionRepository>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
-        var mapperMock = new Mock<IMapper>();
 
         var permission = new PermissionDto
         {
@@ -97,7 +96,7 @@ public class PermissionServiceTests
             }
         };
 
-        var service = new PermissionService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(true);
@@ -126,7 +125,7 @@ public class PermissionServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionRepositoryMock = new Mock<IPermissionRepository>();
 
-        var service = new PermissionService(unitOfWorkMock.Object, null);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(false);
@@ -144,27 +143,22 @@ public class PermissionServiceTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionRepositoryMock = new Mock<IPermissionRepository>();
-        var mapperMock = new Mock<IMapper>();
         const int permissionId = 1;
 
         var permission = new Permission
         {
             Id = permissionId,
-            Name = "Permission1"
+            Name = "Permission1",
+            PermissionType = new PermissionType { Id = 1, Description = "Type1" }
         };
 
-        var permissionDto = new PermissionDto();
-
-        var service = new PermissionService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(true);
 
         permissionRepositoryMock.Setup(x => x.GetByIdAsync(permissionId, It.IsAny<IEnumerable<string>>()))
             .ReturnsAsync(permission);
-
-        mapperMock.Setup(x => x.Map<PermissionDto>(permission))
-            .Returns(permissionDto);
 
         unitOfWorkMock.Setup(v => v.PermissionRepository)
             .Returns(permissionRepositoryMock.Object);
@@ -173,7 +167,8 @@ public class PermissionServiceTests
         var result = await service.GetPermission(permissionId);
 
         // Assert
-        Assert.That(permissionDto, Is.EqualTo(result));
+        Assert.That(permission.Id, Is.EqualTo(result.Id));
+        Assert.That(permission.Name, Is.EqualTo(result.Name));
     }
 
     [Test]
@@ -183,7 +178,7 @@ public class PermissionServiceTests
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionRepositoryMock = new Mock<IPermissionRepository>();
 
-        var service = new PermissionService(unitOfWorkMock.Object, null);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(false);
@@ -201,7 +196,6 @@ public class PermissionServiceTests
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionRepositoryMock = new Mock<IPermissionRepository>();
-        var mapperMock = new Mock<IMapper>();
         const int permissionId = 1;
 
         var permission = new Permission
@@ -210,7 +204,7 @@ public class PermissionServiceTests
             Name = "Permission1"
         };
 
-        var service = new PermissionService(unitOfWorkMock.Object, mapperMock.Object);
+        var service = new PermissionService(unitOfWorkMock.Object);
 
         permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
             .ReturnsAsync(true);
