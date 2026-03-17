@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using ITL.API.Middlewares;
 using ITL.Application.Services;
+using ITL.Domain;
 using ITL.Domain.Services;
 using ITL.Infrastructure.Database;
 using ITL.Infrastructure.Repositories;
@@ -38,11 +39,7 @@ public class Startup
 
         services.SetupUnitOfWork();
 
-        services.AddAutoMapper(
-            Assembly.GetExecutingAssembly()
-                .GetReferencedAssemblies()
-                .Select(Assembly.Load)
-                .ToArray());
+        services.AddScoped<IMapper, ITL.Infrastructure.Mapper.CustomMapper>();
 
         services.AddScoped<IPermissionService, PermissionService>();
         services.AddScoped<IPermissionTypeService, PermissionTypeService>();
