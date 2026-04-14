@@ -115,6 +115,10 @@
     },
     "extract-text-webpack-plugin": {
       "ajv": "^6.12.6"
+    },
+    "picomatch": "^2.3.2",
+    "jest-environment-jsdom": {
+      "picomatch": "^4.0.4"
     }
   },
   "engines": {
