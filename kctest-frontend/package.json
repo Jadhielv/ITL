@@ -90,6 +90,7 @@
     "webpack-merge": "^4.2.2"
   },
   "overrides": {
+    "uuid": "^14.0.0",
     "follow-redirects": "^1.16.0",
     "lodash": "^4.18.0",
     "tmp": "^0.2.5",
