@@ -99,7 +99,7 @@
     "serialize-javascript": "^7.0.5",
     "json5": "^2.2.2",
     "loader-utils": "^2.0.4",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.10",
     "minimatch": "^3.1.5",
     "editorconfig": {
       "minimatch": "^9.0.7"
