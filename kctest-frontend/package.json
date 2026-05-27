@@ -14,7 +14,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.29.2",
+    "@babel/runtime-corejs2": "^7.29.7",
     "axios": "1.15.2",
     "bootstrap-vue": "^2.23.1",
     "moment": "^2.30.1",
