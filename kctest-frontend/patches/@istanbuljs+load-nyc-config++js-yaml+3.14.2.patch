@@ -1,0 +1,18 @@
+diff --git a/node_modules/@istanbuljs/load-nyc-config/node_modules/js-yaml/lib/js-yaml/loader.js b/node_modules/@istanbuljs/load-nyc-config/node_modules/js-yaml/lib/js-yaml/loader.js
+index 0e1e43d..6804e9a 100644
+--- a/node_modules/@istanbuljs/load-nyc-config/node_modules/js-yaml/lib/js-yaml/loader.js
++++ b/node_modules/@istanbuljs/load-nyc-config/node_modules/js-yaml/lib/js-yaml/loader.js
+@@ -336,8 +336,12 @@ function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valu
+
+   if (keyTag === 'tag:yaml.org,2002:merge') {
+     if (Array.isArray(valueNode)) {
++      var seen = new Set();
+       for (index = 0, quantity = valueNode.length; index < quantity; index += 1) {
+-        mergeMappings(state, _result, valueNode[index], overridableKeys);
++        var src = valueNode[index];
++        if (seen.has(src)) continue;
++        seen.add(src);
++        mergeMappings(state, _result, src, overridableKeys);
+       }
+     } else {
+       mergeMappings(state, _result, valueNode, overridableKeys);
