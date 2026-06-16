@@ -122,6 +122,10 @@
     "picomatch": "^2.3.2",
     "jest-environment-jsdom": {
       "picomatch": "^4.0.4"
+    },
+    "js-yaml": "^4.2.0",
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "^3.14.2"
     }
   },
   "engines": {
