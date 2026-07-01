@@ -126,7 +126,9 @@
     "js-yaml": "^4.2.0",
     "@istanbuljs/load-nyc-config": {
       "js-yaml": "^3.14.2"
-    }
+    },
+    "http-proxy-middleware": "^2.0.10",
+    "path-to-regexp": "^0.1.13"
   },
   "engines": {
     "node": ">= 18.0.0",
