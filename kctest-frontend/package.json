@@ -50,7 +50,7 @@
     "compression-webpack-plugin": "^7.0.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^6.11.0",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
@@ -91,9 +91,7 @@
   },
   "overrides": {
     "brace-expansion": "^1.1.18",
-    "minimatch": {
-      "brace-expansion": "^1.1.18"
-    },
+    "minimatch": "^3.1.5",
     "uuid": "^14.0.0",
     "follow-redirects": "^1.16.0",
     "lodash": "^4.18.0",
@@ -104,7 +102,6 @@
     "json5": "^2.2.2",
     "loader-utils": "^2.0.4",
     "postcss": "^8.5.10",
-    "minimatch": "^3.1.5",
     "editorconfig": {
       "minimatch": "^9.0.7",
       "brace-expansion": "^2.1.4"
