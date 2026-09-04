@@ -135,7 +135,11 @@
       "js-yaml": "^3.15.1"
     },
     "http-proxy-middleware": "^2.0.10",
-    "path-to-regexp": "^0.1.13"
+    "path-to-regexp": "^0.1.13",
+    "browserslist": "^4.28.7",
+    "fast-uri": "^3.1.6",
+    "decode-uri-component": "^0.5.0",
+    "postcss-selector-parser": "^6.1.3"
   },
   "engines": {
     "node": ">= 18.0.0",
