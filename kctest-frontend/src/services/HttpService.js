@@ -4,7 +4,7 @@ export default class HttpService {
   baseUrl = ''
 
   constructor () {
-    this.baseUrl = 'https://localhost:5001/api'
+    this.baseUrl = '/api'
   }
 
   async get (endpoint = '') {
