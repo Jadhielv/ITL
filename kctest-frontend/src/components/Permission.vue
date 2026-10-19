@@ -2,233 +2,208 @@
   <div class="container mt-3">
     <div class="row">
       <div class="col-4">
-          <b-button class="mb-2 btn btn-secondary" v-b-modal="'permissionForm'">Add new permission</b-button>
-          <b-modal id="permissionForm" hide-footer v-if='showModal' @hidden="cleanModal()">
-             <b-form>
-               <p v-if="errors.length">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                  <li v-for='error in errors' v-bind:key='error.id'>{{ error }}</li>
-                </ul>
-              </p>
-                <b-form-group class="font-weight-bold" id="input-group-1" label="Name:" label-for="input-1" description="Name">
-                  <b-form-input id="input-1"
-                    v-model="permission.name"
-                    type="text"
-                    v-on:keypress='isLetter($event)'
-                    required placeholder="Enter name"></b-form-input>
-                </b-form-group>
-
-                <b-form-group class="font-weight-bold" id="input-group-1" label="Last Name:" label-for="input-1" description="Last Name">
-                  <b-form-input id="input-1"
-                    v-model="permission.lastName"
-                    type="text"
-                    v-on:keypress='isLetter($event)'
-                    required placeholder="Enter lastName"></b-form-input>
-                </b-form-group>
-
-                <b-form-group class="font-weight-bold" id="input-group-1" label="Permission type:" label-for="input-1" description="Permission type">
-                  <b-form-select id="input-3" v-model="permission.permissionType" :options="permissionTypes" required>
-                  </b-form-select>
-                </b-form-group>
-
-                <b-form-group class="font-weight-bold" id="input-group-1" label="Date:" label-for="input-1" description="Date">
-                  <b-form-input id="input-1"
-                    v-model="permission.date"
-                    type="date"
-                    required placeholder="Enter date"></b-form-input>
-                </b-form-group>
-
-                <b-button class="float-right btn btn-secondary" v-on:click='addOrEditPermission($event)' variant="secondary">Save</b-button>
-              </b-form>
-          </b-modal>
+        <BButton class="mb-2" variant="secondary" @click="openModal">
+          Add new permission
+        </BButton>
+        <BModal v-model="showModal" title="Permission" hide-footer @hidden="cleanModal">
+          <BForm @submit.prevent="addOrEditPermission">
+            <p v-if="errors.length">
+              <strong>Please correct the following error(s):</strong>
+            </p>
+            <ul v-if="errors.length">
+              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+            <BFormGroup label="Name:" label-for="permission-name">
+              <BFormInput
+                id="permission-name"
+                v-model="permission.name"
+                required
+                placeholder="Enter name"
+                @keypress="isLetter"
+              />
+            </BFormGroup>
+            <BFormGroup label="Last Name:" label-for="permission-last-name">
+              <BFormInput
+                id="permission-last-name"
+                v-model="permission.lastName"
+                required
+                placeholder="Enter last name"
+                @keypress="isLetter"
+              />
+            </BFormGroup>
+            <BFormGroup label="Permission type:" label-for="permission-type">
+              <BFormSelect
+                id="permission-type"
+                v-model="permission.permissionType"
+                :options="permissionTypeOptions"
+                required
+              />
+            </BFormGroup>
+            <BFormGroup label="Date:" label-for="permission-date">
+              <BFormInput
+                id="permission-date"
+                v-model="permission.date"
+                type="date"
+                required
+              />
+            </BFormGroup>
+            <BButton class="float-end" type="submit" variant="secondary">Save</BButton>
+          </BForm>
+        </BModal>
       </div>
       <div class="col-12">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th v-for='column of columns' v-bind:key='column.id' scope="col">{{ column }}</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for='permission of permissions' v-bind:key='permission.id'>
-                <th scope="row" v-for='column of columns' v-bind:key='column.id'>{{ getElementValue(permission[lowerCaseFirstLetter(column)]) }}</th>
-                <th>
-                  <b-button variant="btn btn-success" v-b-modal="'permissionForm'" v-on:click='editPermission(permission)'>Edit</b-button>
-                  <b-button variant="btn btn-danger" v-on:click='deletePermission(permission)'>Delete</b-button>
-                </th>
-              </tr>
-            </tbody>
-          </table>
+        <BAlert
+          v-if="permissionsStore.error || permissionTypesStore.error"
+          :model-value="true"
+          variant="danger"
+        >
+          {{ permissionsStore.error || permissionTypesStore.error }}
+        </BAlert>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th v-for="column in columns" :key="column" scope="col">{{ column }}</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in permissions" :key="item.id">
+              <th v-for="column in columns" :key="column" scope="row">
+                {{ getElementValue(item[lowerCaseFirstLetter(column)]) }}
+              </th>
+              <td>
+                <BButton class="me-1" variant="success" @click="editPermission(item)">Edit</BButton>
+                <BButton variant="danger" @click="deletePermission(item)">Delete</BButton>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <b-alert :show="dismissCountDown" dismissible variant="success" @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged">
+    <BAlert
+      v-model="dismissCountDown"
+      dismissible
+      variant="success"
+      @close-countdown="countDownChanged"
+    >
       <p>Permission deleted</p>
-      <b-progress variant="warning" :max="dismissSecs" :value="dismissCountDown" height="4px"></b-progress>
-    </b-alert>
+      <BProgress variant="warning" :max="dismissSecs" :value="dismissCountDown" height="4px" />
+    </BAlert>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import {
-  AlertPlugin,
-  ButtonPlugin,
-  FormGroupPlugin,
-  FormInputPlugin,
-  FormPlugin,
-  FormSelectPlugin,
-  ModalPlugin,
-  ProgressPlugin
-} from 'bootstrap-vue'
-import HttpService from './../services/HttpService.js'
-import moment from 'moment'
-
-Vue.use(AlertPlugin)
-Vue.use(ButtonPlugin)
-Vue.use(FormGroupPlugin)
-Vue.use(FormInputPlugin)
-Vue.use(FormPlugin)
-Vue.use(FormSelectPlugin)
-Vue.use(ModalPlugin)
-Vue.use(ProgressPlugin)
-
-const httpService = new HttpService()
+  BAlert,
+  BButton,
+  BForm,
+  BFormGroup,
+  BFormInput,
+  BFormSelect,
+  BModal,
+  BProgress
+} from 'bootstrap-vue-next'
+import { storeToRefs } from 'pinia'
+import { usePermissionTypesStore } from '../stores/permissionTypes'
+import { usePermissionsStore } from '../stores/permissions'
 
 export default {
   name: 'PermissionForm',
+  components: {
+    BAlert,
+    BButton,
+    BForm,
+    BFormGroup,
+    BFormInput,
+    BFormSelect,
+    BModal,
+    BProgress
+  },
+  setup () {
+    const permissionsStore = usePermissionsStore()
+    const permissionTypesStore = usePermissionTypesStore()
+    const { items: permissions } = storeToRefs(permissionsStore)
+    const { items: permissionTypes } = storeToRefs(permissionTypesStore)
+    return { permissionsStore, permissionTypesStore, permissions, permissionTypes }
+  },
+  data () {
+    return {
+      showModal: false,
+      columns: ['Name', 'LastName', 'PermissionType', 'Date'],
+      errors: [],
+      permission: { id: undefined, name: '', lastName: '', permissionType: null, date: '' },
+      isEditing: false,
+      dismissSecs: 5000,
+      dismissCountDown: 0
+    }
+  },
+  computed: {
+    permissionTypeOptions () {
+      return [
+        { value: null, text: 'Please select an option' },
+        ...this.permissionTypes.map(item => ({ text: item.description, value: item }))
+      ]
+    }
+  },
   methods: {
-    lowerCaseFirstLetter: function (str = '') {
+    lowerCaseFirstLetter (str = '') {
       return str.charAt(0).toLowerCase() + str.slice(1)
     },
-    getElementValue: function (element) {
+    getElementValue (element) {
       return element?.description || element
     },
-    addOrEditPermission: async function (e) {
-      if (this.checkForm(e)) {
-        if (!this.isEditing) {
-          const result = await httpService.post('permission', this.permission)
-          this.permissions = [...this.permissions, this.permission]
-          if (result) {
-            this.$bvModal.hide('permissionForm')
-            this.cleanModal()
-            this.updatePermissions()
-          } else {
-            this.permissions = this.permissions.pop()
-          }
-        } else {
-          const result = await httpService.put('permission', this.permission)
-          if (result !== undefined) {
-            const index = this.permissions.indexOf(this.permission)
-            this.permissions[index] = this.permission
-            this.$bvModal.hide('permissionForm')
-            this.cleanModal()
-          }
-        }
-      }
+    openModal () {
+      this.cleanModal()
+      this.showModal = true
     },
-    editPermission: function (permission) {
-      this.permission = permission
+    async addOrEditPermission () {
+      if (!this.checkForm()) return
+
+      const saved = this.isEditing
+        ? await this.permissionsStore.update(this.permission)
+        : await this.permissionsStore.create(this.permission)
+
+      if (saved) this.showModal = false
+    },
+    editPermission (permission) {
+      this.permission = {
+        ...permission,
+        permissionType: permission.permissionType ? { ...permission.permissionType } : null
+      }
       this.isEditing = true
+      this.showModal = true
     },
-    deletePermission: async function (permission) {
-      const result = await httpService.delete('permission', permission.id)
-      if (result !== undefined) {
-        const index = this.permissions.indexOf(permission)
-        this.permissions.splice(index, 1)
-        this.showAlert()
-      }
+    async deletePermission (permission) {
+      if (await this.permissionsStore.remove(permission.id)) this.showAlert()
     },
-    cleanModal: function () {
+    cleanModal () {
       this.permission = { id: undefined, name: '', lastName: '', permissionType: null, date: '' }
       this.isEditing = false
       this.errors = []
     },
-    countDownChanged: function (dismissCountDown) {
+    countDownChanged (dismissCountDown) {
       this.dismissCountDown = dismissCountDown
     },
-    showAlert: function () {
+    showAlert () {
       this.dismissCountDown = this.dismissSecs
     },
-    updatePermissions: async function () {
-      const permissionsRequestResult = await httpService.get('permission')
-
-      if (typeof permissionsRequestResult !== 'undefined') {
-        permissionsRequestResult.forEach(function (item) {
-          item.date = moment(String(item.date)).format('YYYY-MM-DD')
-        })
-
-        this.permissions = permissionsRequestResult
-      } else {
-        alert('Service Unavailable: Network Error')
-      }
+    isLetter (event) {
+      if (!/^[A-Za-z\s]$/.test(event.key)) event.preventDefault()
     },
-    isLetter: function (e) {
-      const char = String.fromCharCode(e.keyCode)
-      if (/^[A-Za-z\s]+$/.test(char)) return true
-      else e.preventDefault()
-    },
-    checkForm: function (e) {
+    checkForm () {
       this.errors = []
-
-      if (!this.permission.name) {
-        this.errors.push('Name required.')
-      }
-      if (!this.permission.lastName) {
-        this.errors.push('Last Name required.')
-      }
-      if (!this.permission.permissionType) {
-        this.errors.push('Permission type required.')
-      }
-      if (!this.permission.date) {
-        this.errors.push('Date required.')
-      }
-
-      if (!this.errors.length) {
-        return true
-      }
-
-      e.preventDefault()
+      if (!this.permission.name) this.errors.push('Name required.')
+      if (!this.permission.lastName) this.errors.push('Last Name required.')
+      if (!this.permission.permissionType) this.errors.push('Permission type required.')
+      if (!this.permission.date) this.errors.push('Date required.')
+      return this.errors.length === 0
     }
   },
-  data: function () {
-    return {
-      showModal: true,
-      columns: ['Name', 'LastName', 'PermissionType', 'Date'],
-      permissions: [],
-      errors: [],
-      permission: { id: undefined, name: '', lastName: '', permissionType: null, date: '' },
-      permissionTypes: [{ value: null, text: 'Please select an option' }],
-      isEditing: false,
-      dismissSecs: 5,
-      dismissCountDown: 0,
-      showDismissibleAlert: false
-    }
-  },
-  created: async function () {
-    const permissionsRequestResult = await httpService.get('permission')
-
-    if (typeof permissionsRequestResult !== 'undefined') {
-      permissionsRequestResult.forEach(function (item) {
-        item.date = moment(String(item.date)).format('YYYY-MM-DD')
-      })
-
-      this.permissions = permissionsRequestResult
-    } else {
-      alert('Service Unavailable: Network Error')
-    }
-
-    const permissionTypesRequestResult = await httpService.get('permissionType')
-
-    if (typeof permissionTypesRequestResult !== 'undefined') {
-      this.permissionTypes = [...this.permissionTypes, ...permissionTypesRequestResult.map((x) => {
-        return { text: x.description, value: x }
-      })]
-    } else {
-      alert('Service Unavailable: Network Error')
-    }
+  async mounted () {
+    await Promise.all([
+      this.permissionsStore.load(),
+      this.permissionTypesStore.load()
+    ])
   }
 }
 </script>

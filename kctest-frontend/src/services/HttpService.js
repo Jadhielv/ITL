@@ -8,42 +8,22 @@ export default class HttpService {
   }
 
   async get (endpoint = '') {
-    try {
-      return (await axios.get(`${this.baseUrl}/${endpoint}`)).data
-    } catch (error) {
-      console.log(error)
-    }
+    return (await axios.get(`${this.baseUrl}/${endpoint}`)).data
   }
 
   async getById (endpoint = '', id = '') {
-    try {
-      return (await axios.get(`${this.baseUrl}/${endpoint}/${id}`)).data
-    } catch (error) {
-      console.log(error)
-    }
+    return (await axios.get(`${this.baseUrl}/${endpoint}/${id}`)).data
   }
 
   async post (endpoint = '', body) {
-    try {
-      return (await axios.post(`${this.baseUrl}/${endpoint}`, body)).data
-    } catch (error) {
-      console.log(error)
-    }
+    return (await axios.post(`${this.baseUrl}/${endpoint}`, body)).data
   }
 
   async put (endpoint = '', body) {
-    try {
-      return (await axios.put(`${this.baseUrl}/${endpoint}`, body)).data
-    } catch (error) {
-      console.log(error)
-    }
+    return (await axios.put(`${this.baseUrl}/${endpoint}`, body)).data
   }
 
   async delete (endpoint = '', id) {
-    try {
-      return (await axios.delete(`${this.baseUrl}/${endpoint}/${id}`)).data
-    } catch (error) {
-      console.log(error)
-    }
+    return (await axios.delete(`${this.baseUrl}/${endpoint}/${id}`)).data
   }
 }

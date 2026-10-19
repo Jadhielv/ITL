@@ -31,7 +31,7 @@ To use SQL Server instead, set `Database:Provider` to `SqlServer` in `Backend/sr
 
 Outside Development, `Database:Provider` defaults to `SqlServer`. Select `InMemory` only for local development or testing; it is temporary and is not a substitute for persistent storage.
 
-[(kctest-frontend)](https://github.com/Jadhielv/ITL/tree/master/kctest-frontend)
+The [kctest-frontend](https://github.com/Jadhielv/ITL/tree/master/kctest-frontend) is built with Vue 3, Pinia, Vue Router 4, BootstrapVue Next, and Bootstrap 5.
 
 Follow the instructions in [README](https://github.com/Jadhielv/ITL/blob/master/kctest-frontend/README.md) file.
 

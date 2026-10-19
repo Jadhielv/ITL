@@ -25,7 +25,11 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   optimization: {
-    minimizer: ['...', new CssMinimizerPlugin()]
+    minimizer: ['...', new CssMinimizerPlugin({
+      minimizerOptions: {
+        preset: ['default', { svgo: false }]
+      }
+    })]
   },
   output: {
     path: config.build.assetsRoot,
