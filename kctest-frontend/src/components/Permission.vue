@@ -78,7 +78,7 @@ import moment from 'moment'
 const httpService = new HttpService()
 
 export default {
-  name: 'permission',
+  name: 'PermissionForm',
   methods: {
     lowerCaseFirstLetter: function (str = '') {
       return str.charAt(0).toLowerCase() + str.slice(1)
@@ -105,7 +105,7 @@ export default {
             this.permissions[index] = this.permission
             this.$bvModal.hide('permissionForm')
             this.cleanModal()
-          } else { }
+          }
         }
       }
     },
@@ -119,7 +119,7 @@ export default {
         const index = this.permissions.indexOf(permission)
         this.permissions.splice(index, 1)
         this.showAlert()
-      } else { }
+      }
     },
     cleanModal: function () {
       this.permission = { id: undefined, name: '', lastName: '', permissionType: null, date: '' }
@@ -146,7 +146,7 @@ export default {
       }
     },
     isLetter: function (e) {
-      let char = String.fromCharCode(e.keyCode)
+      const char = String.fromCharCode(e.keyCode)
       if (/^[A-Za-z\s]+$/.test(char)) return true
       else e.preventDefault()
     },
@@ -180,7 +180,7 @@ export default {
       permissions: [],
       errors: [],
       permission: { id: undefined, name: '', lastName: '', permissionType: null, date: '' },
-      permissionTypes: [ { value: null, text: 'Please select an option' } ],
+      permissionTypes: [{ value: null, text: 'Please select an option' }],
       isEditing: false,
       dismissSecs: 5,
       dismissCountDown: 0,
@@ -203,7 +203,7 @@ export default {
     const permissionTypesRequestResult = await httpService.get('permissionType')
 
     if (typeof permissionTypesRequestResult !== 'undefined') {
-      this.permissionTypes = [ ...this.permissionTypes, ...permissionTypesRequestResult.map((x) => {
+      this.permissionTypes = [...this.permissionTypes, ...permissionTypesRequestResult.map((x) => {
         return { text: x.description, value: x }
       })]
     } else {
