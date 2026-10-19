@@ -58,7 +58,7 @@
       @close-countdown="countDownChanged"
     >
       <p>Permission type deleted</p>
-      <BProgress variant="warning" :max="dismissSecs" :value="dismissCountDown" height="4px" />
+      <BProgress variant="warning" :max="dismissSecs" :value="countDownRemaining" height="4px" />
     </BAlert>
   </div>
 </template>
@@ -100,7 +100,8 @@ export default {
       permissionType: { id: undefined, description: '' },
       isEditing: false,
       dismissSecs: 5000,
-      dismissCountDown: 0
+      dismissCountDown: 0,
+      countDownRemaining: 0
     }
   },
   methods: {
@@ -136,8 +137,8 @@ export default {
       this.isEditing = false
       this.errors = []
     },
-    countDownChanged (dismissCountDown) {
-      this.dismissCountDown = dismissCountDown
+    countDownChanged (remainingMs) {
+      this.countDownRemaining = remainingMs
     },
     showAlert () {
       this.dismissCountDown = this.dismissSecs
