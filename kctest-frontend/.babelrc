@@ -15,7 +15,6 @@
     ]
   ],
   "plugins": [
-    "transform-vue-jsx",
     [
       "@babel/plugin-transform-runtime",
       {
@@ -44,7 +43,6 @@
         "@babel/preset-env"
       ],
       "plugins": [
-        "transform-vue-jsx",
         "@babel/plugin-transform-modules-commonjs",
         "dynamic-import-node",
         "@babel/plugin-syntax-dynamic-import",
