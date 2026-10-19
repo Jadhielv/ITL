@@ -1,95 +1,166 @@
 <template>
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-4">
-        <BButton class="mb-2" variant="secondary" @click="openModal">
-          Add new permission
-        </BButton>
-        <BModal v-model="showModal" title="Permission" hide-footer @hidden="cleanModal">
-          <BForm @submit.prevent="addOrEditPermission">
-            <p v-if="errors.length">
-              <strong>Please correct the following error(s):</strong>
-            </p>
-            <ul v-if="errors.length">
-              <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
-            </ul>
-            <BFormGroup label="Name:" label-for="permission-name">
-              <BFormInput
-                id="permission-name"
-                v-model="permission.name"
-                required
-                placeholder="Enter name"
-                @keypress="isLetter"
-              />
-            </BFormGroup>
-            <BFormGroup label="Last Name:" label-for="permission-last-name">
-              <BFormInput
-                id="permission-last-name"
-                v-model="permission.lastName"
-                required
-                placeholder="Enter last name"
-                @keypress="isLetter"
-              />
-            </BFormGroup>
-            <BFormGroup label="Permission type:" label-for="permission-type">
-              <BFormSelect
-                id="permission-type"
-                v-model="permission.permissionType"
-                :options="permissionTypeOptions"
-                required
-              />
-            </BFormGroup>
-            <BFormGroup label="Date:" label-for="permission-date">
-              <BFormInput
-                id="permission-date"
-                v-model="permission.date"
-                type="date"
-                required
-              />
-            </BFormGroup>
-            <BButton class="float-end" type="submit" variant="secondary">Save</BButton>
-          </BForm>
-        </BModal>
+  <main class="container-xxl app-page">
+    <header class="page-heading">
+      <div>
+        <p class="page-eyebrow">ACCESS MANAGEMENT</p>
+        <h1>Permissions</h1>
+        <p class="page-description">Manage employee permissions and the types assigned to them.</p>
       </div>
-      <div class="col-12">
-        <BAlert
-          v-if="permissionsStore.error || permissionTypesStore.error"
-          :model-value="true"
-          variant="danger"
-        >
-          {{ permissionsStore.error || permissionTypesStore.error }}
-        </BAlert>
-        <table class="table table-striped table-bordered">
+      <BButton class="app-primary-button" variant="primary" @click="openModal">
+        <span class="button-plus" aria-hidden="true">+</span>
+        Add permission
+      </BButton>
+    </header>
+
+    <BModal v-model="showModal" :title="isEditing ? 'Edit permission' : 'Add permission'" no-footer @hidden="cleanModal">
+      <BForm @submit.prevent="addOrEditPermission">
+        <div v-if="errors.length" class="form-errors" role="alert">
+          <strong>Please correct the following:</strong>
+          <ul class="mb-0">
+            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+          </ul>
+        </div>
+        <BFormGroup label="First name" label-for="permission-name">
+          <BFormInput
+            id="permission-name"
+            v-model="permission.name"
+            required
+            placeholder="Enter first name"
+            @keypress="isLetter"
+          />
+        </BFormGroup>
+        <BFormGroup label="Last name" label-for="permission-last-name">
+          <BFormInput
+            id="permission-last-name"
+            v-model="permission.lastName"
+            required
+            placeholder="Enter last name"
+            @keypress="isLetter"
+          />
+        </BFormGroup>
+        <BFormGroup label="Permission type" label-for="permission-type">
+          <BFormSelect
+            id="permission-type"
+            v-model="permission.permissionType"
+            :options="permissionTypeOptions"
+            required
+          />
+        </BFormGroup>
+        <BFormGroup label="Date" label-for="permission-date">
+          <BFormInput
+            id="permission-date"
+            v-model="permission.date"
+            type="date"
+            required
+          />
+        </BFormGroup>
+        <div class="modal-actions">
+          <BButton variant="outline-secondary" @click="showModal = false">Cancel</BButton>
+          <BButton class="app-primary-button" type="submit" variant="primary">Save permission</BButton>
+        </div>
+      </BForm>
+    </BModal>
+
+    <BModal
+      v-model="showDeleteModal"
+      title="Delete permission?"
+      no-footer
+      @hidden="clearDeleteConfirmation"
+    >
+      <p class="confirmation-copy">
+        Are you sure you want to delete
+        <strong>{{ permissionToDelete?.name }} {{ permissionToDelete?.lastName }}</strong>'s permission?
+        This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <BButton variant="outline-secondary" @click="showDeleteModal = false">Cancel</BButton>
+        <BButton class="app-danger-button" variant="danger" @click="confirmDeletePermission">
+          Delete permission
+        </BButton>
+      </div>
+    </BModal>
+
+    <div class="summary-grid">
+      <article class="summary-card">
+        <div>
+          <p class="summary-label">Total permissions</p>
+          <p class="summary-value">{{ permissions.length }}</p>
+        </div>
+      </article>
+      <article class="summary-card">
+        <div>
+          <p class="summary-label">Permission types</p>
+          <p class="summary-value">{{ permissionTypes.length }}</p>
+        </div>
+      </article>
+    </div>
+
+    <BAlert
+      v-if="permissionsStore.error || permissionTypesStore.error"
+      :model-value="true"
+      variant="danger"
+      class="app-alert"
+    >
+      {{ permissionsStore.error || permissionTypesStore.error }}
+    </BAlert>
+
+    <section class="data-panel" aria-labelledby="permissions-table-title">
+      <header class="panel-heading">
+        <div>
+          <h2 id="permissions-table-title">All permissions</h2>
+          <p>Review and manage employee permission records.</p>
+        </div>
+        <span class="record-count">{{ permissions.length }} {{ permissions.length === 1 ? 'record' : 'records' }}</span>
+      </header>
+      <div class="table-responsive">
+        <table class="table app-table align-middle mb-0">
           <thead>
             <tr>
-              <th v-for="column in columns" :key="column" scope="col">{{ column }}</th>
-              <th scope="col">Actions</th>
+              <th v-for="column in columns" :key="column.key" scope="col">{{ column.label }}</th>
+              <th scope="col" class="actions-heading">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="permissions.length">
             <tr v-for="item in permissions" :key="item.id">
-              <th v-for="column in columns" :key="column" scope="row">
-                {{ getElementValue(item[lowerCaseFirstLetter(column)]) }}
-              </th>
-              <td>
-                <BButton class="me-1" variant="success" @click="editPermission(item)">Edit</BButton>
-                <BButton variant="danger" @click="deletePermission(item)">Delete</BButton>
+              <td v-for="column in columns" :key="column.key">
+                <span v-if="column.key === 'permissionType'" class="type-badge">
+                  {{ getElementValue(item[column.key]) }}
+                </span>
+                <span v-else>{{ column.key === 'date' ? formatDate(item.date) : item[column.key] }}</span>
+              </td>
+              <td class="row-actions">
+                <BButton variant="outline-secondary" @click="editPermission(item)">Edit</BButton>
+                <BButton variant="outline-danger" @click="deletePermission(item)">Delete</BButton>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td :colspan="columns.length + 1" class="empty-state">
+                <span class="empty-state-icon" aria-hidden="true"></span>
+                <strong>No permissions yet</strong>
+                <span>Add a permission to see it listed here.</span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
+
     <BAlert
       v-model="dismissCountDown"
       dismissible
       variant="success"
+      class="app-toast app-toast-success"
       @close-countdown="countDownChanged"
     >
-      <p>Permission deleted</p>
-      <BProgress variant="warning" :max="dismissSecs" :value="countDownRemaining" height="4px" />
+      <div class="toast-content">
+        <span class="toast-check" aria-hidden="true">✓</span>
+        <span>Permission deleted successfully</span>
+      </div>
+      <BProgress class="toast-progress" variant="success" :max="dismissSecs" :value="countDownRemaining" />
     </BAlert>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -129,9 +200,16 @@ export default {
   data () {
     return {
       showModal: false,
-      columns: ['Name', 'LastName', 'PermissionType', 'Date'],
+      showDeleteModal: false,
+      columns: [
+        { label: 'Employee', key: 'name' },
+        { label: 'Last name', key: 'lastName' },
+        { label: 'Permission type', key: 'permissionType' },
+        { label: 'Date', key: 'date' }
+      ],
       errors: [],
       permission: { id: undefined, name: '', lastName: '', permissionType: null, date: '' },
+      permissionToDelete: null,
       isEditing: false,
       dismissSecs: 5000,
       dismissCountDown: 0,
@@ -147,8 +225,14 @@ export default {
     }
   },
   methods: {
-    lowerCaseFirstLetter (str = '') {
-      return str.charAt(0).toLowerCase() + str.slice(1)
+    formatDate (value) {
+      if (!value) return ''
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC'
+      }).format(new Date(value))
     },
     getElementValue (element) {
       return element?.description || element
@@ -174,8 +258,19 @@ export default {
       this.isEditing = true
       this.showModal = true
     },
-    async deletePermission (permission) {
-      if (await this.permissionsStore.remove(permission.id)) this.showAlert()
+    deletePermission (permission) {
+      this.permissionToDelete = permission
+      this.showDeleteModal = true
+    },
+    async confirmDeletePermission () {
+      if (!this.permissionToDelete) return
+
+      const deleted = await this.permissionsStore.remove(this.permissionToDelete.id)
+      this.showDeleteModal = false
+      if (deleted) this.showAlert()
+    },
+    clearDeleteConfirmation () {
+      this.permissionToDelete = null
     },
     cleanModal () {
       this.permission = { id: undefined, name: '', lastName: '', permissionType: null, date: '' }
