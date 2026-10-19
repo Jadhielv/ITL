@@ -129,11 +129,38 @@ public class PermissionTypeServiceTests
     }
 
     [Test]
+    public void DeletePermissionType_PermissionTypeIsInUse_Should_ThrowsConflictException()
+    {
+        // Arrange
+        var unitOfWorkMock = new Mock<IUnitOfWork>();
+        var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
+        var permissionRepositoryMock = new Mock<IPermissionRepository>();
+        var permissionTypeId = 1;
+
+        permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
+            .ReturnsAsync(true);
+        permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
+            .ReturnsAsync(true);
+
+        unitOfWorkMock.Setup(v => v.PermissionTypeRepository).Returns(permissionTypeRepositoryMock.Object);
+        unitOfWorkMock.Setup(v => v.PermissionRepository).Returns(permissionRepositoryMock.Object);
+
+        var service = new PermissionTypeService(unitOfWorkMock.Object);
+
+        // Act => Assert
+        Assert.ThrowsAsync<ConflictException>(() => service.DeletePermissionType(permissionTypeId),
+            "The permission type is assigned to one or more permissions and cannot be deleted.");
+        permissionTypeRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<int>(), It.IsAny<IEnumerable<string>>()), Times.Never);
+        unitOfWorkMock.Verify(x => x.SaveAsync(), Times.Never);
+    }
+
+    [Test]
     public async Task DeletePermissionType_PermissionTypeFound_Should_DeletePermissionType()
     {
         // Arrange
         var unitOfWorkMock = new Mock<IUnitOfWork>();
         var permissionTypeRepositoryMock = new Mock<IPermissionTypeRepository>();
+        var permissionRepositoryMock = new Mock<IPermissionRepository>();
         const int permissionTypeId = 1;
 
         var permissionType = new PermissionType();
@@ -143,11 +170,16 @@ public class PermissionTypeServiceTests
         permissionTypeRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<PermissionType, bool>>>()))
             .ReturnsAsync(true);
 
+        permissionRepositoryMock.Setup(v => v.ExistAsync(It.IsAny<Expression<Func<Permission, bool>>>()))
+            .ReturnsAsync(false);
+
         permissionTypeRepositoryMock.Setup(x => x.GetByIdAsync(permissionTypeId, It.IsAny<IEnumerable<string>>()))
             .ReturnsAsync(permissionType);
 
         unitOfWorkMock.Setup(v => v.PermissionTypeRepository)
             .Returns(permissionTypeRepositoryMock.Object);
+        unitOfWorkMock.Setup(v => v.PermissionRepository)
+            .Returns(permissionRepositoryMock.Object);
 
         // Act 
         await service.DeletePermissionType(permissionTypeId);

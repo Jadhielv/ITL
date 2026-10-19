@@ -50,6 +50,11 @@ public class PermissionTypeService : IPermissionTypeService
         if (!exists)
             throw new NotFoundException("The permission type doesn't exist.");
 
+        var isInUse = await _unitOfWork.PermissionRepository.ExistAsync(
+            x => x.PermissionType != null && x.PermissionType.Id == permissionTypeId);
+        if (isInUse)
+            throw new ConflictException("The permission type is assigned to one or more permissions and cannot be deleted.");
+
         var permissionType = await _unitOfWork.PermissionTypeRepository.GetByIdAsync(permissionTypeId);
         await _unitOfWork.PermissionTypeRepository.DeleteAsync(permissionType);
         await _unitOfWork.SaveAsync();

@@ -4,6 +4,8 @@ import HttpService from '../services/HttpService'
 const httpService = new HttpService()
 
 function getErrorMessage (error) {
+  const responseMessage = error?.response?.data?.message
+  if (typeof responseMessage === 'string' && responseMessage.length > 0) return responseMessage
   return error instanceof Error ? error.message : String(error)
 }
 
