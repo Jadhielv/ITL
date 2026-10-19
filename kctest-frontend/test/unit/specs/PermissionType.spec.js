@@ -10,5 +10,10 @@ describe('PermissionType.vue', () => {
 
     await flushPromises()
     expect(wrapper.text()).toContain('Add new permission type')
+
+    wrapper.vm.dismissCountDown = wrapper.vm.dismissSecs
+    wrapper.vm.countDownChanged(4200)
+    expect(wrapper.vm.countDownRemaining).toBe(4200)
+    expect(wrapper.vm.dismissCountDown).toBe(wrapper.vm.dismissSecs)
   })
 })
