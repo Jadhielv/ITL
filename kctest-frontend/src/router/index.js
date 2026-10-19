@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Permission from '@/components/Permission'
-import PermissionType from '@/components/PermissionType'
 
 Vue.use(Router)
 
@@ -10,12 +8,12 @@ export default new Router({
     {
       path: '/',
       name: 'permission',
-      component: Permission
+      component: () => import(/* webpackChunkName: "permission" */ '@/components/Permission')
     },
     {
       path: '/types',
       name: 'permission-type',
-      component: PermissionType
+      component: () => import(/* webpackChunkName: "permission-type" */ '@/components/PermissionType')
     }
   ]
 })

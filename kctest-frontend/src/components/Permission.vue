@@ -72,8 +72,28 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import {
+  AlertPlugin,
+  ButtonPlugin,
+  FormGroupPlugin,
+  FormInputPlugin,
+  FormPlugin,
+  FormSelectPlugin,
+  ModalPlugin,
+  ProgressPlugin
+} from 'bootstrap-vue'
 import HttpService from './../services/HttpService.js'
 import moment from 'moment'
+
+Vue.use(AlertPlugin)
+Vue.use(ButtonPlugin)
+Vue.use(FormGroupPlugin)
+Vue.use(FormInputPlugin)
+Vue.use(FormPlugin)
+Vue.use(FormSelectPlugin)
+Vue.use(ModalPlugin)
+Vue.use(ProgressPlugin)
 
 const httpService = new HttpService()
 

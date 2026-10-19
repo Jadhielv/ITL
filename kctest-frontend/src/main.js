@@ -5,10 +5,6 @@ import App from './App'
 import router from './router'
 
 import './assets/css/app.css'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
 
