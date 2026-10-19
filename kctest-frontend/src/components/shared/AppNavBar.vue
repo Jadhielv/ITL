@@ -1,18 +1,24 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">KCTest</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <RouterLink class="navbar-brand" to="/">KCTest</RouterLink>
+    <button
+      class="navbar-toggler"
+      type="button"
+      aria-controls="navbarSupportedContent"
+      :aria-expanded="isExpanded"
+      aria-label="Toggle navigation"
+      @click="isExpanded = !isExpanded"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div id="navbarSupportedContent" class="collapse navbar-collapse" :class="{ show: isExpanded }">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Permission</router-link>
+          <router-link class="nav-link" to="/" @click="isExpanded = false">Permission</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/types">Permission Types</router-link>
+          <router-link class="nav-link" to="/types" @click="isExpanded = false">Permission Types</router-link>
         </li>
       </ul>
     </div>
@@ -24,7 +30,7 @@ export default {
   name: 'app-navbar',
   data () {
     return {
-      msg: ''
+      isExpanded: false
     }
   }
 }
