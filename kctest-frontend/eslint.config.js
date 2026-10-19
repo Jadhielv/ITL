@@ -6,5 +6,24 @@ module.exports = [
   {
     ignores: ['build/**', 'config/**', 'dist/**', '*.js', 'test/unit/coverage/**'],
   },
-  ...compat.config(eslintrc),
+  ...compat.config(eslintrc).map((config) => ({
+    ...config,
+    files: ['**/*.{js,vue}'],
+  })),
+  {
+    files: ['test/unit/**/*.js'],
+    languageOptions: {
+      globals: {
+        afterAll: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        beforeEach: 'readonly',
+        describe: 'readonly',
+        expect: 'readonly',
+        it: 'readonly',
+        jest: 'readonly',
+        test: 'readonly',
+      },
+    },
+  },
 ];

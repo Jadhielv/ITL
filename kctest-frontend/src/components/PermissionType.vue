@@ -84,7 +84,7 @@ export default {
             this.permissionTypes[index] = this.permissionType
             this.$bvModal.hide('permissionTypeForm')
             this.cleanModal()
-          } else { }
+          }
         }
       }
     },
@@ -98,7 +98,7 @@ export default {
         const index = this.permissionTypes.indexOf(permissionType)
         this.permissionTypes.splice(index, 1)
         this.showAlert()
-      } else { }
+      }
     },
     cleanModal: function () {
       this.permissionType = { id: undefined, description: '' }
@@ -121,7 +121,7 @@ export default {
       }
     },
     isLetter: function (e) {
-      let char = String.fromCharCode(e.keyCode)
+      const char = String.fromCharCode(e.keyCode)
       if (/^[A-Za-z\s]+$/.test(char)) return true
       else e.preventDefault()
     },
