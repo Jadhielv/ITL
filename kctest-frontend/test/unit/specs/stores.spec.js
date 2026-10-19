@@ -58,4 +58,21 @@ describe('Pinia stores', () => {
     await expect(store.load()).resolves.toBe(false)
     expect(store.error).toContain('offline')
   })
+
+  it('keeps a referenced permission type and displays the API conflict message', async () => {
+    const store = usePermissionTypesStore()
+    const permissionType = { id: 2, description: 'Sick leave' }
+    store.items = [permissionType]
+    axios.delete.mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'The permission type is assigned to one or more permissions and cannot be deleted.'
+        }
+      }
+    })
+
+    await expect(store.remove(permissionType.id)).resolves.toBe(false)
+    expect(store.items).toEqual([permissionType])
+    expect(store.error).toContain('The permission type is assigned to one or more permissions')
+  })
 })
