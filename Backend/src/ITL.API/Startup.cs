@@ -35,7 +35,12 @@ public class Startup
         services.AddValidatorsFromAssemblies(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(Assembly.Load));
 
         services.AddDbContext<KCTestContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("KCTestContext")));
+        {
+            if (DatabaseProviderConfiguration.UsesInMemoryDatabase(Configuration))
+                options.UseInMemoryDatabase("KCTest");
+            else
+                options.UseSqlServer(Configuration.GetConnectionString("KCTestContext"));
+        });
 
         services.SetupUnitOfWork();
 
