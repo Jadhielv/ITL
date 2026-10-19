@@ -21,10 +21,15 @@ Data validation using [FluentValidation](https://github.com/JeremySkinner/Fluent
 ## How to run application: 
 [(Backend)](https://github.com/Jadhielv/ITL/tree/master/Backend)
 
-1. Create empty database, name: **`KCTest`**.
-2. Execute [migrations](https://github.com/Jadhielv/ITL/tree/master/Backend/src/ITL.Infrastructure/Migrations).
-3. Set connection string (in [appsettings.json](https://github.com/Jadhielv/ITL/blob/master/Backend/src/ITL.API/appsettings.json) or by user secrets mechanism).
-4. Run `dotnet run --project Backend/src/ITL.API` to start the API.
+1. Install the **.NET 10 SDK**.
+2. Run `dotnet restore Backend/Backend.sln` and `dotnet build Backend/Backend.sln`.
+3. Start the API with `dotnet run --project Backend/src/ITL.API --launch-profile ITL.API`.
+   The Development environment uses an in-memory database by default, so SQL Server is not required. Its seed data (permission types) is recreated on each run and is not persisted after the API stops.
+4. Open `https://localhost:5001/swagger` to explore the API.
+
+To use SQL Server instead, set `Database:Provider` to `SqlServer` in `Backend/src/ITL.API/appsettings.Development.json` (or use `Database__Provider=SqlServer` as an environment variable), then set the `KCTestContext` connection string in `appsettings.json`, user secrets, or the `ConnectionStrings__KCTestContext` environment variable. Create the `KCTest` database first; the API applies its migrations on startup.
+
+Outside Development, `Database:Provider` defaults to `SqlServer`. Select `InMemory` only for local development or testing; it is temporary and is not a substitute for persistent storage.
 
 [(kctest-frontend)](https://github.com/Jadhielv/ITL/tree/master/kctest-frontend)
 

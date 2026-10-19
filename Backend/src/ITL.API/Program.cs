@@ -2,6 +2,7 @@ using ITL.Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace ITL.API;
@@ -15,7 +16,12 @@ public class Program
         using (var scope = host.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<KCTestContext>();
-            db.Database.Migrate();
+            var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
+            if (DatabaseProviderConfiguration.UsesInMemoryDatabase(configuration))
+                db.Database.EnsureCreated();
+            else
+                db.Database.Migrate();
         }
 
         host.Run();
