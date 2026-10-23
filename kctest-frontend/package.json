@@ -140,6 +140,7 @@
     "postcss-modules-local-by-default": {
       "postcss-selector-parser": "^7.1.6"
     },
+    "launch-editor": "^2.14.2",
     "postcss-modules-scope": {
       "postcss-selector-parser": "^7.1.6"
     }
