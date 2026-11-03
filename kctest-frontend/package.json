@@ -99,6 +99,7 @@
     "nanoid": "^3.3.17",
     "proxy-addr": "^2.0.8",
     "compression": "^1.8.2",
+    "qs": "^6.16.1",
     "source-map-js": "^1.2.2",
     "shell-quote": "^1.11.0",
     "editorconfig": {
