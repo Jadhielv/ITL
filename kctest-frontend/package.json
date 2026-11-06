@@ -19,7 +19,7 @@
     "bootstrap-vue-next": "^1.2.2",
     "moment": "^2.31.0",
     "pinia": "^3.0.4",
-    "vue": "^3.5.44",
+    "vue": "^3.5.45",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
